@@ -8,7 +8,7 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
-/.idea
-\.idea/GymManagement.iml
-\.idea/misc.xml
-\.idea/vcs.xml
+
+/target/
+*.iml
+.idea/
