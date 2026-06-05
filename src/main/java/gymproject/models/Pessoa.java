@@ -1,8 +1,17 @@
 package gymproject.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.time.LocalDate;
 
-public class Aluno extends Pessoa {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter @Setter
+
+
+public abstract class Pessoa {
     private String nome;
     private String cpf;
     private String telefone;
