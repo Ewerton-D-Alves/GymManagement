@@ -1,12 +1,8 @@
 package gymproject.repository;
 import gymproject.models.Aluno;
-import jakarta.data.repository.Find;
-import jakarta.data.repository.Insert;
-import jakarta.data.repository.Repository;
-import jakarta.data.repository.Update;
+import jakarta.data.repository.*;
 
 import java.util.List;
-
 
 @Repository
 public interface AlunoRepository {
@@ -15,9 +11,14 @@ public interface AlunoRepository {
  void cadastrar(Aluno aluno);
 
  @Find
- List<Aluno> listar();
+ List<Aluno> listar(Aluno aluno);
+
+ @Find
+ List<Aluno> listarAlunos(String nome, String cpf);
 
  @Update
  void atualizar(Aluno aluno);
 
+ @Delete
+ void desativar(Aluno aluno);
 }
