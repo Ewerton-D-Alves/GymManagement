@@ -14,7 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-public class Aluno extends Pessoa /* implements AlunoService */ {
+public class Aluno extends Pessoa {
 
  private UUID matricula;
 
