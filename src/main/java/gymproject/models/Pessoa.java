@@ -1,7 +1,6 @@
 package gymproject.models;
-import jakarta.persistence.*;
-//import jakarta.persistence.Id;
-//import jakarta.persistence.PostInsert;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,8 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-@Entity
-
+@MappedSuperclass
 public abstract class Pessoa {
     private String nome;
     @Id
@@ -21,4 +19,12 @@ public abstract class Pessoa {
     private LocalDate dataNascimento;
     private String nomeEmerg;
     private String telefoneEmerg;
+
+    @Override
+    public String toString() {
+        return "Pessoa (" + "Nome = " + nome + "\n" + "CPF = " + cpf + "\n"
+                + "Telefone = " + telefone + "\n" + "Data de nascimento = "
+                + dataNascimento + "\n" + "Nome contato de emergência = "
+                + nomeEmerg + "\n" + "Contato de emergência = " + telefoneEmerg + ")";
+    }
 }
