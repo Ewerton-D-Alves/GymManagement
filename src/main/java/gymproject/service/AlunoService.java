@@ -15,17 +15,16 @@ public class AlunoService {
         if (alunoNovo.getCpf() == null || alunoNovo.getCpf().isBlank()) {
             throw new AlunoNotFoundException("O CPF é obrigatório.");
         }
-        verificarAluno(alunoNovo);
+        verificarAluno(alunoNovo.getCpf());
         alunoRepository.cadastrar(alunoNovo);
         System.out.println("aluno cadastrado.");
     }
     //Metodo para verificar aluno
-    private String verificarAluno(Aluno alunoNovo) throws AlunoNotFoundException {
-        Optional<Aluno> alunoCadastrado = alunoRepository.buscarCpf(alunoNovo.getCpf());
+    private void verificarAluno(String cpf) throws AlunoNotFoundException {
+        Optional<Aluno> alunoCadastrado = alunoRepository.buscarCpf(cpf);
         if (alunoCadastrado.isPresent()) {
             throw new AlunoNotFoundException("Já existe um aluno cadastrado.");
         }
-        return("Não existe aluno.");
     }
 
 
