@@ -5,7 +5,9 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("======= Bem-vindo a academia entra forte e sai frango ======");
-        System.out.println("Para consultar o menu, digite: 1 \nPara sair, digite: 0");
-        int primeiroValor = sc.nextInt();
+        System.out.println(" ");
+        System.out.println(">|< Para maior lucidez, não seja um usuário de atacadão >|<");
+
+
     }
 }

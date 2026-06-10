@@ -2,6 +2,7 @@ package gymproject.repository;
 import gymproject.models.Aluno;
 import jakarta.data.repository.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -11,7 +12,7 @@ public interface AlunoRepository {
  void cadastrar(Aluno aluno);
 
  @Find
- Optional<Aluno> listarAlunos();
+ List<Aluno> listarAlunos();
 
  @Find
  Optional<Aluno> buscarCpf(String cpf);
