@@ -19,7 +19,7 @@ public abstract class Pessoa {
     private String meioNome;
     @Column(nullable = false)
     private String sobrenome;
-    @Id //@Column(name = "CPF")
+    @Id
     private String cpf;
     @Column(nullable = false)
     private String telefone;
