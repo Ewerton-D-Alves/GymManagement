@@ -2,6 +2,8 @@ package gymproject.repository;
 
 import gymproject.models.Professor;
 import jakarta.data.repository.*;
+
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -11,7 +13,7 @@ public interface ProfessorRepository {
     void cadastrar(Professor professor);
 
     @Find
-    Optional<Professor> listarProfessor();
+    List<Professor> listarProfessor();
 
     @Find
     Optional<Professor> buscarCpf(String cpf);
