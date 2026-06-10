@@ -12,10 +12,8 @@ public interface AlunoRepository {
  void cadastrar(Aluno aluno);
 
  @Find
- List<Aluno> listar(Aluno aluno);
+ List<Aluno> listarAlunos();
 
- @Find
- List<Aluno> listarAlunos(String nome, String cpf);
  @Find
  Optional<Aluno> buscarCpf(String cpf);
 
@@ -23,5 +21,5 @@ public interface AlunoRepository {
  void atualizar(Aluno aluno);
 
  @Delete
- void desativar(Aluno aluno);
+ void excluir(Aluno aluno);
 }
