@@ -20,12 +20,12 @@ public class AlunoService {
         System.out.println("aluno cadastrado.");
     }
     //Metodo para verificar aluno
-    private void verificarAluno(Aluno alunoNovo) throws AlunoNotFoundException {
+    private String verificarAluno(Aluno alunoNovo) throws AlunoNotFoundException {
         Optional<Aluno> alunoCadastrado = alunoRepository.buscarCpf(alunoNovo.getCpf());
         if (alunoCadastrado.isPresent()) {
             throw new AlunoNotFoundException("Já existe um aluno cadastrado.");
         }
-        System.out.println("Aluno não cadastrado");
+        return("Não existe aluno.");
     }
 
 
