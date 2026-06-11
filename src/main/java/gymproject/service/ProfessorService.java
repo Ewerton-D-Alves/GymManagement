@@ -15,13 +15,13 @@ public class ProfessorService {
         if (professorNovo.getCpf() == null || professorNovo.getCpf().isBlank()) {
             throw new ProfessorNotFoundException("O CPF é obrigatório.");
         }
-        verificarProfessor(professorNovo);
+        verificarProfessor(professorNovo.getCpf());
         professorRepository.cadastrar(professorNovo);
         System.out.println("Professor cadastrado.");
     }
     //Metodo para verificar cadastro
-    private void verificarProfessor(Professor professorNovo) {
-        Optional<Professor> professorCadastrado = professorRepository.buscarCpf(professorNovo.getCpf());
+    private void verificarProfessor(String cpf) {
+        Optional<Professor> professorCadastrado = professorRepository.buscarCpf(cpf);
         if (professorCadastrado.isPresent()) {
             throw new ProfessorNotFoundException("Já existe um professor cadastrado.");
         }
