@@ -5,16 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
-import java.util.UUID;
+
 
 @NoArgsConstructor
 @Getter @Setter
 @Entity
-public class Professor extends Pessoa {
+public class Professor extends Staff {
 
-    public Professor (String primeiroNome, String nomeMeio, String sobrenome, String cpf, String telefone, LocalDate dataNascimento,
-                      String nomeEmerg, String telefoneEmerg) {
-        super(primeiroNome, nomeMeio, sobrenome, cpf, telefone, dataNascimento, nomeEmerg, telefoneEmerg);
+    public Professor(String primeiroNome, String meioNome, String sobrenome,
+                     String cpf, String telefone, LocalDate dataNascimento,
+                     String telefoneEmerg, String nomeEmerg,
+                     String loginAcesso, String senhaAcesso) {
+        super(primeiroNome, meioNome, sobrenome, cpf, telefone, dataNascimento,
+                telefoneEmerg, nomeEmerg, loginAcesso, senhaAcesso);
     }
 }
 

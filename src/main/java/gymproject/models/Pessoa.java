@@ -13,21 +13,21 @@ import java.time.LocalDate;
 @Getter @Setter
 @MappedSuperclass
 public abstract class Pessoa {
-    @Column(name = "primeiro_nome", nullable = false)
+    @Column(name = "primeiro_nome", nullable = false, length = 100)
     private String primeiroNome;
-    @Column(name = "nome_do_meio", nullable = false)
+    @Column(name = "nome_do_meio", nullable = false, length = 100)
     private String meioNome;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String sobrenome;
-    @Id
+    @Id @Column(length = 11)
     private String cpf;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 9)
     private String telefone;
     @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;
-    @Column(name = "nome_contato_emergencia", nullable = false)
+    @Column(name = "numero_contato_emergencia", nullable = false, length = 9)
     private String telefoneEmerg;
-    @Column(name = "numero_contato_emergencia", nullable = false)
+    @Column(name = "nome_contato_emergencia", nullable = false, length = 255)
     private String nomeEmerg;
 
     @Override
