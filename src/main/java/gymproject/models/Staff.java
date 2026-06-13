@@ -14,17 +14,14 @@ import java.time.LocalDate;
 @Setter
 @Entity
 public class Staff extends Pessoa {
-    @Id
     private String loginAcesso;
-    @Column(nullable = false)
     private String senhaAcesso;
 
-    public Staff(String primeiroNome, String meioNome, String sobrenome,
+    public Staff(String primeiroNome, String sobrenome,
                  String cpf, String telefone, LocalDate dataNascimento,
                  String telefoneEmerg, String nomeEmerg,
                  String loginAcesso, String senhaAcesso) {
-        super(primeiroNome, meioNome, sobrenome, cpf, telefone,
-                dataNascimento, telefoneEmerg, nomeEmerg);
+        super(primeiroNome, sobrenome, cpf, telefone, dataNascimento, telefoneEmerg, nomeEmerg);
         this.loginAcesso = loginAcesso;
         this.senhaAcesso = senhaAcesso;
     }

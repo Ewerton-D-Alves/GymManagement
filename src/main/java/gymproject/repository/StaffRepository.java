@@ -1,5 +1,6 @@
 package gymproject.repository;
 
+import gymproject.models.Professor;
 import gymproject.models.Staff;
 import jakarta.data.repository.*;
 
@@ -11,11 +12,18 @@ public interface StaffRepository {
     @Insert
     void cadastrarUsuario(Staff staff);
 
+
+    @Update
+    void atualizarUsuario(Staff staff);
+
     @Find
     Optional<Staff> buscarLogin(String loginAcesso);
 
     @Find
     Optional<Staff> buscarSenha(String senhaAcesso);
+
+    @Find
+    Optional<Staff> buscarCpf(String cpf);
 
     @Update
     void alterarLogin(String loginAcesso);
@@ -24,5 +32,5 @@ public interface StaffRepository {
     void alterarSenha(String senhaAcesso);
 
     @Delete
-    void removerUsuario(String loginAcesso, String senhaAcesso);
+    void removerUsuario(String loginAcesso,String senhaAcesso);
 }
