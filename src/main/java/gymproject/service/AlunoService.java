@@ -25,7 +25,7 @@ public class AlunoService {
         if (alunoCadastrado.isPresent()) {
             throw new AlunoNotFoundException("Já existe um aluno cadastrado.");
         }
-        System.out.println("Aluno não cadastrado");
+        System.out.println("Aluno não encontrado.");
     }
 
 
