@@ -25,6 +25,5 @@ public class ProfessorService {
         if (professorCadastrado.isPresent()) {
             throw new ProfessorNotFoundException("Já existe um professor cadastrado.");
         }
-        System.out.println("Professor não cadastrado.");
     }
 }

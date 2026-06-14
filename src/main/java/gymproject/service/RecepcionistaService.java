@@ -24,6 +24,5 @@ public class RecepcionistaService {
         if (recepCadastrado.isPresent()) {
             throw new RecepcionistaNotFoundException("Já existe um recepcionista cadastrado.");
         }
-        System.out.println("Recepcionista não encontrado.");
     }
 }

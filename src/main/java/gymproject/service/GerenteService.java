@@ -1,7 +1,6 @@
 package gymproject.service;
 
 import gymproject.exceptions.GerenteNotFoundException;
-
 import gymproject.models.Gerente;
 import gymproject.repository.GerenteRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +24,6 @@ public class GerenteService {
         if (gerenteCadastrado.isPresent()) {
             throw new GerenteNotFoundException("Já existe um gerente cadastrado.");
         }
-        System.out.println("Gerente não encontrado.");
+
     }
 }
