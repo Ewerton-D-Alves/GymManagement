@@ -15,9 +15,9 @@ public class Professor extends Staff {
     public Professor(String primeiroNome, String sobrenome,
                      String cpf, String telefone, LocalDate dataNascimento,
                      String telefoneEmerg, String nomeEmerg,
-                     String loginAcesso, String senhaAcesso) {
+                     String loginAcesso, String senhaAcesso, String funcao) {
         super(primeiroNome, sobrenome, cpf, telefone, dataNascimento,
-                telefoneEmerg, nomeEmerg, loginAcesso, senhaAcesso);
+                telefoneEmerg, nomeEmerg, loginAcesso, senhaAcesso, funcao);
     }
 }
 
