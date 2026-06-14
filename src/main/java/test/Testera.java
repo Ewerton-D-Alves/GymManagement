@@ -2,12 +2,12 @@ package test;
 
 import gymproject.exceptions.GerenteNotFoundException;
 import gymproject.exceptions.ProfessorNotFoundException;
-import gymproject.models.Gerente;
-import gymproject.models.Professor;
-import gymproject.models.Recepcionista;
+import gymproject.models.*;
 import gymproject.repository.GerenteRepository;
+import gymproject.repository.PessoaRepository;
 import gymproject.repository.ProfessorRepository;
 import gymproject.repository.RecepcionistaRepository;
+import gymproject.service.AlunoService;
 import gymproject.service.GerenteService;
 import gymproject.service.ProfessorService;
 import gymproject.service.RecepcionistaService;
@@ -22,29 +22,59 @@ public class Testera {
 
         Scanner sc = new Scanner(System.in);
 
-        GerenteRepository gerenteRepository = new GerenteRepository() {
+        PessoaRepository pessoaRepository = new PessoaRepository() {
             @Override
-            public void cadastrar(Gerente gerente) {
+            public Optional<Pessoa> buscarCpf(String cpf) {
+                return Optional.empty();
             }
+
+            @Override
+            public void cadastrarAluno(Aluno aluno) {
+
+            }
+
+            @Override
+            public List<Aluno> listarAlunos() {
+                return List.of();
+            }
+
+            @Override
+            public Optional<Aluno> buscarCpfAluno(String cpf) {
+                return Optional.empty();
+            }
+
+            @Override
+            public void atualizarAluno(Aluno aluno) {
+
+            }
+
+            @Override
+            public void excluirAluno(Aluno aluno) {
+
+            }
+
+            @Override
+            public void cadastrarGerente(Gerente gerente) {
+
+            }
+
             @Override
             public List<Gerente> listarGerente() {
                 return List.of();
             }
+
             @Override
-            public Optional<Gerente> buscarCpf(String cpf) {
-                return Optional.empty();
+            public void atualizarGerente(Gerente gerente) {
+
             }
+
             @Override
-            public void atualizar(Gerente gerente) {
+            public void excluirGerente(Gerente gerente) {
+
             }
+
             @Override
-            public void excluir(Gerente gerente) {
-            }
-        };
-        GerenteService gerenteService = new GerenteService(gerenteRepository);
-        ProfessorRepository professorRepository = new ProfessorRepository() {
-            @Override
-            public void cadastrar(Professor professor) {
+            public void cadastrarProfessor(Professor professor) {
 
             }
 
@@ -54,24 +84,22 @@ public class Testera {
             }
 
             @Override
-            public Optional<Professor> buscarCpf(String cpf) {
+            public Optional<Professor> buscarCpfprofesor(String cpf) {
                 return Optional.empty();
             }
 
             @Override
-            public void atualizar(Professor professor) {
+            public void atualizarProfessor(Professor professor) {
 
             }
 
             @Override
-            public void excluir(Professor professor) {
+            public void excluirProfessor(Professor professor) {
 
             }
-        };
-        ProfessorService professorService = new ProfessorService(professorRepository);
-        RecepcionistaRepository recepcionistaRepository = new RecepcionistaRepository() {
+
             @Override
-            public void cadastrar(Recepcionista recepcionista) {
+            public void cadastrarRecepcionista(Recepcionista recepcionista) {
 
             }
 
@@ -81,21 +109,54 @@ public class Testera {
             }
 
             @Override
-            public Optional<Recepcionista> buscarCpf(String cpf) {
+            public void atualizarRecepcionista(Recepcionista recepcionista) {
+
+            }
+
+            @Override
+            public void excluirRecepcionista(Recepcionista recepcionista) {
+
+            }
+
+            @Override
+            public void cadastrarUsuario(Staff staff) {
+
+            }
+
+            @Override
+            public void atualizarUsuario(Staff staff) {
+
+            }
+
+            @Override
+            public Optional<Staff> buscarLogin(String loginAcesso) {
                 return Optional.empty();
             }
 
             @Override
-            public void atualizar(Recepcionista recepcionista) {
+            public Optional<Staff> buscarSenha(String senhaAcesso) {
+                return Optional.empty();
+            }
+
+            @Override
+            public void alterarLogin(String loginAcesso) {
 
             }
 
             @Override
-            public void excluir(Recepcionista recepcionista) {
+            public void alterarSenha(String senhaAcesso) {
+
+            }
+
+            @Override
+            public void removerUsuario(String loginAcesso, String senhaAcesso) {
 
             }
         };
-        RecepcionistaService recepcionistaService = new RecepcionistaService(recepcionistaRepository);
+        GerenteService gerenteService = new GerenteService(pessoaRepository);
+        ProfessorService professorService = new ProfessorService(pessoaRepository);
+        RecepcionistaService recepcionistaService = new RecepcionistaService(pessoaRepository);
+        AlunoService alunoService = new AlunoService(pessoaRepository);
 
         DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         while (true) {
@@ -144,7 +205,5 @@ public class Testera {
                 }
             }
         }
-
-
     }
 }

@@ -7,6 +7,15 @@ import java.util.Optional;
 
 @Repository
 public interface PessoaRepository {
+
+
+    //Para buscar todas as pessoas \/
+
+    @Find
+    Optional<Pessoa> buscarCpf(String cpf);
+
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Aluno @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //Inicio das opções de aluno;
     @Insert
     void cadastrarAluno(Aluno aluno);
 
@@ -21,22 +30,26 @@ public interface PessoaRepository {
 
     @Delete
     void excluirAluno(Aluno aluno);
-
+    //Fim das opções de aluno
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Gerente @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //Inicio das opções de gerente
     @Insert
     void cadastrarGerente(Gerente gerente);
 
     @Find
     List<Gerente> listarGerente();
 
-    @Find
-    Optional<Gerente> buscarCpfGerente(String cpf);
+//    @Find
+//    Optional<Gerente> buscarCpfGerente(String cpf);
 
     @Update
     void atualizarGerente(Gerente gerente);
 
     @Delete
     void excluirGerente(Gerente gerente);
-
+    //Fim das opções de gerente
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Professor @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //Inicio das opções de professor
     @Insert
     void cadastrarProfessor(Professor professor);
 
@@ -44,29 +57,33 @@ public interface PessoaRepository {
     List<Professor> listarProfessor();
 
     @Find
-    Optional<Professor> buscarCpfProfessor(String cpf);
+    Optional<Professor> buscarCpfprofesor(String cpf);
 
     @Update
     void atualizarProfessor(Professor professor);
 
     @Delete
     void excluirProfessor(Professor professor);
-
+    //Fim das opções de professor
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Recepcionista @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //Inicio das opções de recepcionista
     @Insert
     void cadastrarRecepcionista(Recepcionista recepcionista);
 
     @Find
     List<Recepcionista> listarRecepcionista();
 
-    @Find
-    Optional<Recepcionista> buscarCpfRecepcionista(String cpf);
+//    @Find
+//    Optional<Recepcionista> buscarCpfRecepcionista(String cpf);
 
     @Update
     void atualizarRecepcionista(Recepcionista recepcionista);
 
     @Delete
     void excluirRecepcionista(Recepcionista recepcionista);
-
+    //Fim das opções de recepcionista
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Staff @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //Inicio das opções de staff
     @Insert
     void cadastrarUsuario(Staff staff);
 
@@ -79,8 +96,8 @@ public interface PessoaRepository {
     @Find
     Optional<Staff> buscarSenha(String senhaAcesso);
 
-    @Find
-    Optional<Staff> buscarCpfStaff(String cpf);
+//    @Find
+//    Optional<Staff> buscarCpfStaff(String cpf);
 
     @Update
     void alterarLogin(String loginAcesso);
@@ -90,4 +107,6 @@ public interface PessoaRepository {
 
     @Delete
     void removerUsuario(String loginAcesso,String senhaAcesso);
+    //Fim das opções de staff
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 }

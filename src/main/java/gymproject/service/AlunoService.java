@@ -1,32 +1,27 @@
 package gymproject.service;
 
 import gymproject.exceptions.AlunoNotFoundException;
+import gymproject.exceptions.RecepcionistaNotFoundException;
 import gymproject.models.Aluno;
-import gymproject.repository.AlunoRepository;
+import gymproject.models.Pessoa;
+import gymproject.repository.PessoaRepository;
 import lombok.RequiredArgsConstructor;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 public class AlunoService {
-    private final AlunoRepository alunoRepository;
+    private final PessoaRepository pessoaRepository;
 
-    //Metodo para cadastrar aluno
     public void cadastrarAluno(Aluno alunoNovo) throws AlunoNotFoundException {
         if (alunoNovo.getCpf() == null || alunoNovo.getCpf().isBlank()) {
-            throw new AlunoNotFoundException("O CPF é obrigatório.");
+            throw new RecepcionistaNotFoundException("O CPF é obrigatório.");
         }
-        verificarAluno(alunoNovo.getCpf());
-        alunoRepository.cadastrar(alunoNovo);
-        System.out.println("aluno cadastrado.");
-    }
-    //Metodo para verificar aluno
-    private void verificarAluno(String cpf) throws AlunoNotFoundException {
-        Optional<Aluno> alunoCadastrado = alunoRepository.buscarCpf(cpf);
-        if (alunoCadastrado.isPresent()) {
-            throw new AlunoNotFoundException("Já existe um aluno cadastrado.");
+        Optional<Pessoa> PessoaPresente = pessoaRepository.buscarCpf(alunoNovo.getCpf());
+        if (PessoaPresente.isPresent()) {
+            throw new AlunoNotFoundException("Já existe uma pessoa cadastrada com esse CPF.");
         }
-        System.out.println("Aluno não encontrado.");
+        pessoaRepository.cadastrarAluno(alunoNovo);
+        System.out.println("Aluno cadastrado com sucesso.");
     }
-
 
 }
