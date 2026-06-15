@@ -1,12 +1,8 @@
 package test;
 
-import gymproject.exceptions.GerenteNotFoundException;
-import gymproject.exceptions.ProfessorNotFoundException;
+import gymproject.exceptions.PessoaException;
 import gymproject.models.*;
-import gymproject.repository.GerenteRepository;
 import gymproject.repository.PessoaRepository;
-import gymproject.repository.ProfessorRepository;
-import gymproject.repository.RecepcionistaRepository;
 import gymproject.service.AlunoService;
 import gymproject.service.GerenteService;
 import gymproject.service.ProfessorService;
@@ -188,19 +184,19 @@ public class Testera {
             if (funcao.equals("Professor")) {
                 try {
                     professorService.cadastrarProfessor(prof1);
-                } catch (ProfessorNotFoundException e) {
+                } catch (PessoaException e) {
                     System.out.println(e.getMessage());
                 }
             } if (funcao.equals("Recepcionista")) {
                 try {
                     recepcionistaService.cadastrarRecepcionista(recep1);
-                } catch (GerenteNotFoundException e) {
+                } catch (PessoaException e) {
                     System.out.println(e.getMessage());
                 }
             } if (funcao.equals("Gerente")) {
                 try {
                     gerenteService.cadastrarGerente(gerente1);
-                } catch (GerenteNotFoundException e) {
+                } catch (PessoaException e) {
                     System.out.println(e.getMessage());
                 }
             }

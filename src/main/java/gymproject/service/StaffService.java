@@ -1,24 +1,23 @@
 package gymproject.service;
 
-import gymproject.exceptions.ProfessorNotFoundException;
-import gymproject.exceptions.StaffNotFoundException;
-import gymproject.models.Professor;
+import gymproject.exceptions.PessoaException;
 import gymproject.models.Staff;
+import gymproject.repository.PessoaRepository;
 import gymproject.repository.StaffRepository;
 import lombok.RequiredArgsConstructor;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 public class StaffService {
-    private final StaffRepository staffRepository;
+    private final PessoaRepository pessoaRepository;
 
     //Metodo para cadastrar o usuario
-    public void cadastrarUsuario(Staff staffNovo) throws StaffNotFoundException {
+    public void cadastrarUsuario(Staff staffNovo) throws PessoaException {
         if (staffNovo.getCpf() == null || staffNovo.getCpf().isBlank()) {
-            throw new StaffNotFoundException("O CPF é obrigatório.");
+            throw new PessoaException("O CPF é obrigatório.");
     }
-        verificarUsuario(staffNovo.getCpf());
-        staffRepository.cadastrarUsuario(staffNovo);
+        //verificar aqui
+        pessoaRepository.cadastrarUsuario(staffNovo);
         System.out.println("Usuário cadastrado.");
     }
     //Metodo para cadastrar o acesso
@@ -27,13 +26,13 @@ public class StaffService {
 
         //Aqui verifica se o usuario com o cpf de entrada existe.
 
-        Optional<Staff> usuario = staffRepository.buscarCpf(cpf);
+        Optional<Staff> usuario = pessoaRepository.buscarCpfStaff(cpf);
             if (usuario.isEmpty()) {
-            throw new StaffNotFoundException("Nenhum funcionário cadastrado com esse CPF: " + cpf);
+            throw new PessoaException("Nenhum funcionário cadastrado com esse CPF: " + cpf);
         }   if (loginAcesso == null || loginAcesso.isBlank()) {
-            throw new StaffNotFoundException("O login é obrigatório.");
+            throw new PessoaException("O login é obrigatório.");
         }   if (senhaAcesso == null || senhaAcesso.isBlank()) {
-            throw new StaffNotFoundException("A senha é obrigatória.");
+            throw new PessoaException("A senha é obrigatória.");
 
         }   //verifica se o login ja existe para outro usuário;
 
@@ -45,24 +44,15 @@ public class StaffService {
             Staff existeSim = usuario.get();
             existeSim.setLoginAcesso(loginAcesso);
             existeSim.setSenhaAcesso(senhaAcesso);
-            staffRepository.atualizarUsuario(existeSim);
+            pessoaRepository.atualizarUsuario(existeSim);
         }
         //Metodo para verificar se o login ja existe.
 
-    private void verificarLogin(String loginAcesso) throws StaffNotFoundException {
-        Optional<Staff> loginCadastrado = staffRepository.buscarLogin(loginAcesso);
+    private void verificarLogin(String loginAcesso) throws PessoaException {
+        Optional<Staff> loginCadastrado = pessoaRepository.buscarLogin(loginAcesso);
         if (loginCadastrado.isPresent()) {
-            throw new StaffNotFoundException("Já existe um usuário com o mesmo login cadastrado.");
+            throw new PessoaException("Já existe um usuário com o mesmo login cadastrado.");
         }
     }
-        //Metodo para verificar se um cadastro já existe atraves do CPF.
-
-    public void verificarUsuario(String cpf) {
-        Optional<Staff> staffCadastrado = staffRepository.buscarCpf(cpf);
-        if (staffCadastrado.isPresent()) {
-            throw new ProfessorNotFoundException("Já existe um usuário cadastrado.");
-        }
-    }
-
 }
 

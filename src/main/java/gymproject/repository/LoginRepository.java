@@ -1,13 +1,12 @@
 package gymproject.repository;
 
-import gymproject.models.Professor;
 import gymproject.models.Staff;
 import jakarta.data.repository.*;
 
 import java.util.Optional;
 
 @Repository
-public interface StaffRepository {
+public interface LoginRepository {
 
     @Insert
     void cadastrarUsuario(Staff staff);

@@ -1,11 +1,7 @@
 package gymproject.service;
 
-import gymproject.exceptions.GerenteNotFoundException;
-import gymproject.exceptions.RecepcionistaNotFoundException;
 import gymproject.models.Gerente;
 import gymproject.models.Pessoa;
-import gymproject.models.Recepcionista;
-import gymproject.repository.GerenteRepository;
 import gymproject.repository.PessoaRepository;
 import lombok.RequiredArgsConstructor;
 import java.util.Optional;

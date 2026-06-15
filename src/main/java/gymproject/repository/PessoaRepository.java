@@ -96,8 +96,8 @@ public interface PessoaRepository {
     @Find
     Optional<Staff> buscarSenha(String senhaAcesso);
 
-//    @Find
-//    Optional<Staff> buscarCpfStaff(String cpf);
+    @Find
+    Optional<Staff> buscarCpfStaff(String cpf);
 
     @Update
     void alterarLogin(String loginAcesso);
