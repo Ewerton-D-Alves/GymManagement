@@ -7,7 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface LoginRepository {
-
     @Insert
     void cadastrarUsuario(Staff staff);
 
@@ -21,7 +20,7 @@ public interface LoginRepository {
     Optional<Staff> buscarSenha(String senhaAcesso);
 
     @Find
-    Optional<Staff> buscarCpf(String cpf);
+    Optional<Staff> buscarCpfStaff(String cpf);
 
     @Update
     void alterarLogin(String loginAcesso);
@@ -30,5 +29,5 @@ public interface LoginRepository {
     void alterarSenha(String senhaAcesso);
 
     @Delete
-    void removerUsuario(String loginAcesso,String senhaAcesso);
+    void removerUsuario(String loginAcesso, String senhaAcesso);
 }

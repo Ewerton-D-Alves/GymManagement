@@ -2,7 +2,6 @@ package gymproject.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +13,10 @@ import java.time.LocalDate;
 @Setter
 @Entity
 public class Staff extends Pessoa {
+    //Atributos que serão de outra tabela;
+    @Column(name = "login", nullable = true, length = 255)
     private String loginAcesso;
+    @Column(name = "senha", nullable = true,length = 255)
     private String senhaAcesso;
     private String funcao;
 

@@ -18,141 +18,141 @@ public class Testera {
 
         Scanner sc = new Scanner(System.in);
 
-        PessoaRepository pessoaRepository = new PessoaRepository() {
-            @Override
-            public Optional<Pessoa> buscarCpf(String cpf) {
-                return Optional.empty();
-            }
-
-            @Override
-            public void cadastrarAluno(Aluno aluno) {
-
-            }
-
-            @Override
-            public List<Aluno> listarAlunos() {
-                return List.of();
-            }
-
-            @Override
-            public Optional<Aluno> buscarCpfAluno(String cpf) {
-                return Optional.empty();
-            }
-
-            @Override
-            public void atualizarAluno(Aluno aluno) {
-
-            }
-
-            @Override
-            public void excluirAluno(Aluno aluno) {
-
-            }
-
-            @Override
-            public void cadastrarGerente(Gerente gerente) {
-
-            }
-
-            @Override
-            public List<Gerente> listarGerente() {
-                return List.of();
-            }
-
-            @Override
-            public void atualizarGerente(Gerente gerente) {
-
-            }
-
-            @Override
-            public void excluirGerente(Gerente gerente) {
-
-            }
-
-            @Override
-            public void cadastrarProfessor(Professor professor) {
-
-            }
-
-            @Override
-            public List<Professor> listarProfessor() {
-                return List.of();
-            }
-
-            @Override
-            public Optional<Professor> buscarCpfprofesor(String cpf) {
-                return Optional.empty();
-            }
-
-            @Override
-            public void atualizarProfessor(Professor professor) {
-
-            }
-
-            @Override
-            public void excluirProfessor(Professor professor) {
-
-            }
-
-            @Override
-            public void cadastrarRecepcionista(Recepcionista recepcionista) {
-
-            }
-
-            @Override
-            public List<Recepcionista> listarRecepcionista() {
-                return List.of();
-            }
-
-            @Override
-            public void atualizarRecepcionista(Recepcionista recepcionista) {
-
-            }
-
-            @Override
-            public void excluirRecepcionista(Recepcionista recepcionista) {
-
-            }
-
-            @Override
-            public void cadastrarUsuario(Staff staff) {
-
-            }
-
-            @Override
-            public void atualizarUsuario(Staff staff) {
-
-            }
-
-            @Override
-            public Optional<Staff> buscarLogin(String loginAcesso) {
-                return Optional.empty();
-            }
-
-            @Override
-            public Optional<Staff> buscarSenha(String senhaAcesso) {
-                return Optional.empty();
-            }
-
-            @Override
-            public void alterarLogin(String loginAcesso) {
-
-            }
-
-            @Override
-            public void alterarSenha(String senhaAcesso) {
-
-            }
-
-            @Override
-            public void removerUsuario(String loginAcesso, String senhaAcesso) {
-
-            }
-        };
-        GerenteService gerenteService = new GerenteService(pessoaRepository);
-        ProfessorService professorService = new ProfessorService(pessoaRepository);
-        RecepcionistaService recepcionistaService = new RecepcionistaService(pessoaRepository);
-        AlunoService alunoService = new AlunoService(pessoaRepository);
+//        PessoaRepository pessoaRepository = new PessoaRepository() {
+//            @Override
+//            public Optional<Pessoa> buscarCpf(String cpf) {
+//                return Optional.empty();
+//            }
+//
+//            @Override
+//            public void cadastrarAluno(Aluno aluno) {
+//
+//            }
+//
+//            @Override
+//            public List<Aluno> listarAlunos() {
+//                return List.of();
+//            }
+//
+//            @Override
+//            public Optional<Aluno> buscarCpfAluno(String cpf) {
+//                return Optional.empty();
+//            }
+//
+//            @Override
+//            public void atualizarAluno(Aluno aluno) {
+//
+//            }
+//
+//            @Override
+//            public void excluirAluno(Aluno aluno) {
+//
+//            }
+//
+//            @Override
+//            public void cadastrarGerente(Gerente gerente) {
+//
+//            }
+//
+//            @Override
+//            public List<Gerente> listarGerente() {
+//                return List.of();
+//            }
+//
+//            @Override
+//            public void atualizarGerente(Gerente gerente) {
+//
+//            }
+//
+//            @Override
+//            public void excluirGerente(Gerente gerente) {
+//
+//            }
+//
+//            @Override
+//            public void cadastrarProfessor(Professor professor) {
+//
+//            }
+//
+//            @Override
+//            public List<Professor> listarProfessor() {
+//                return List.of();
+//            }
+//
+//            @Override
+//            public Optional<Professor> buscarCpfprofesor(String cpf) {
+//                return Optional.empty();
+//            }
+//
+//            @Override
+//            public void atualizarProfessor(Professor professor) {
+//
+//            }
+//
+//            @Override
+//            public void excluirProfessor(Professor professor) {
+//
+//            }
+//
+//            @Override
+//            public void cadastrarRecepcionista(Recepcionista recepcionista) {
+//
+//            }
+//
+//            @Override
+//            public List<Recepcionista> listarRecepcionista() {
+//                return List.of();
+//            }
+//
+//            @Override
+//            public void atualizarRecepcionista(Recepcionista recepcionista) {
+//
+//            }
+//
+//            @Override
+//            public void excluirRecepcionista(Recepcionista recepcionista) {
+//
+//            }
+//
+//            @Override
+//            public void cadastrarUsuario(Staff staff) {
+//
+//            }
+//
+//            @Override
+//            public void atualizarUsuario(Staff staff) {
+//
+//            }
+//
+//            @Override
+//            public Optional<Staff> buscarLogin(String loginAcesso) {
+//                return Optional.empty();
+//            }
+//
+//            @Override
+//            public Optional<Staff> buscarSenha(String senhaAcesso) {
+//                return Optional.empty();
+//            }
+//
+//            @Override
+//            public void alterarLogin(String loginAcesso) {
+//
+//            }
+//
+//            @Override
+//            public void alterarSenha(String senhaAcesso) {
+//
+//            }
+//
+//            @Override
+//            public void removerUsuario(String loginAcesso, String senhaAcesso) {
+//            }
+//        };
+//
+//        GerenteService gerenteService = new GerenteService(pessoaRepository);
+//        ProfessorService professorService = new ProfessorService(pessoaRepository);
+//        RecepcionistaService recepcionistaService = new RecepcionistaService(pessoaRepository);
+//        AlunoService alunoService = new AlunoService(pessoaRepository);
 
         DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         while (true) {
@@ -184,20 +184,20 @@ public class Testera {
             if (funcao.equals("Professor")) {
                 try {
                     professorService.cadastrarProfessor(prof1);
-                } catch (PessoaException e) {
-                    System.out.println(e.getMessage());
+                } catch (PessoaException erro) {
+                    System.out.println(erro.getMessage());
                 }
             } if (funcao.equals("Recepcionista")) {
                 try {
                     recepcionistaService.cadastrarRecepcionista(recep1);
-                } catch (PessoaException e) {
-                    System.out.println(e.getMessage());
+                } catch (PessoaException erro) {
+                    System.out.println(erro.getMessage());
                 }
             } if (funcao.equals("Gerente")) {
                 try {
                     gerenteService.cadastrarGerente(gerente1);
-                } catch (PessoaException e) {
-                    System.out.println(e.getMessage());
+                } catch (PessoaException erro) {
+                    System.out.println(erro.getMessage());
                 }
             }
         }

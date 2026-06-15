@@ -15,11 +15,11 @@ public class PessoaService {
         if (pessoa.getCpf() == null || pessoa.getCpf().isBlank()) {
             throw new PessoaException("O CPF é obrigatório.");
         }
-            Optional<Pessoa> PessoaPresente = pessoaRepository.buscarCpf(pessoa.getCpf());
-            if (PessoaPresente.isPresent()) {
-                throw new PessoaException("Já existe uma pessoa cadastrada com esse CPF.");
-            }
+        Optional<Pessoa> pessoaPresente = pessoaRepository.buscarCpf(pessoa.getCpf());
+        if (pessoaPresente.isPresent()) {
+            throw new PessoaException("Já existe uma pessoa cadastrada com esse CPF.");
         }
+    }
 
     public void cadastrarAluno(Aluno alunoNovo) throws PessoaException {
         verificarPessoa(alunoNovo);
