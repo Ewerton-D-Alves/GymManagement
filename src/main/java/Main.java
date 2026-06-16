@@ -1,8 +1,6 @@
 
-import gymproject.models.Aluno;
-import gymproject.models.Professor;
-import java.util.ArrayList;
-import java.util.List;
+import gymproject.service.AlunoService;
+
 import java.util.Scanner;
 
 public class Main {
@@ -10,9 +8,23 @@ public class Main {
 
         Scanner s = new Scanner(System.in);
         boolean ativo = true;
+        // variaveis de autorização
+        // Define quais menus são acessáveis
         boolean autenticadoAdm = false;
         boolean autenticadoSect = false;
         boolean autenticadoProf = false;
+        // variaveis de menus
+        boolean menuCentral = false;
+        boolean cadAluno = false;
+        boolean verAluno = false;
+        boolean cadAula = false;
+        boolean verAula = false;
+        boolean cadProf = false;
+        boolean verProf = false;
+        boolean cadTreino = false;
+        boolean verTreino = false;
+        boolean cadSect = false;
+        boolean verSect = false;
         while (ativo) {
             int menuTipo = 0;
             int tipo = 0;
@@ -35,29 +47,92 @@ public class Main {
                 switch (menuTipo) {
                     case 1:
                         autenticadoAdm = true;
+                        menuCentral = true;
                     case 2:
                         autenticadoSect = true;
+                        menuCentral = true;
                     case 3:
                         autenticadoProf = true;
+                        menuCentral = true;
                     default:
                         System.out.println("Login ou senha inválidos");
                 }
             }
             // Admin reverterá para aqui até deslogar
             while (autenticadoAdm) {
-                System.out.println("======= Bem-vindo a academia entra forte e sai frango ====== \n" +
-                        "1 - Cadastrar Aluno \n" + "2 - Consultar aluno\n" + "3 - Consultar Aulas \n" +
-                        "4 - Criar Aula \n" + "5 - Cadastrar Professor \n" + "6 - Consultar Professor \n" +
-                        "7 - Cadastrar Treino \n" + "8 - Consultar Treino \n" +
-                        "9 - Cadastrar Secretário \n" + "10 - Consultar Secretário \n" +
-                        ">|< Para maior lucidez, não seja um usuário de atacadão >|< \n" +
-                        "Pressione 'x' para sair \n");
-                String input = s.nextLine().trim();
-                int tipoMenu = Integer.parseInt(input);
-                if (input.equalsIgnoreCase("x")) {
-                    autenticadoAdm = false;
+
+                while (menuCentral) {
+
+                    System.out.println("======= Bem-vindo a academia entra forte e sai frango ====== \n" +
+                            "1 - Cadastrar Aluno \n" + "2 - Consultar aluno\n" + "3 - Consultar Aulas \n" +
+                            "4 - Criar Aula \n" + "5 - Cadastrar Professor \n" + "6 - Consultar Professor \n" +
+                            "7 - Cadastrar Treino \n" + "8 - Consultar Treino \n" +
+                            "9 - Cadastrar Secretário \n" + "10 - Consultar Secretário \n" +
+                            ">|< Para maior lucidez, não seja um usuário de atacadão >|< \n" +
+                            "Pressione 'x' para sair \n");
+                    String input = s.nextLine().trim();
+                    int tipoMenu = Integer.parseInt(input);
+                    if (input.equalsIgnoreCase("x")) {
+                        autenticadoAdm = false;
+                    }
+                    // Novo scan de buffer, evita erros de passagem de dados, não remover
+                    s.next();
+                    switch (tipoMenu) {
+                        case 1:
+                            cadAluno = true;
+                            menuCentral = false;
+                        case 2:
+                            verAluno = true;
+                            menuCentral = false;
+                        case 3:
+                            verAula = true;
+                            menuCentral = false;
+                        case 4:
+                            cadAula = true;
+                            menuCentral = false;
+                        case 5:
+                            cadProf = true;
+                            menuCentral = false;
+                        case 6:
+                            verProf = true;
+                            menuCentral = false;
+                        case 7:
+                            cadTreino = true;
+                            menuCentral = false;
+                        case 8:
+                            verTreino = true;
+                            menuCentral = false;
+                        case 9:
+                            cadSect = true;
+                            menuCentral = false;
+                        case 10:
+                            verSect = true;
+                            menuCentral = false;
+                    }
+
                 }
-                switch (tipoMenu) {
+                while (cadAluno) {
+                    System.out.println("========== Cadastrar Aluno ===========\n" +
+                            "Digite o CPF do Aluno \n");
+                    boolean cadCpf = true;
+                    while (cadCpf) {
+                        String nome = s.nextLine().trim();
+                        // Nesse momento, o metodo deve receber esse dado e retornar se passou ou não
+                        if (nome.equalsIgnoreCase("x")) {
+                            cadAluno = false;
+                            menuCentral = true;
+                        }
+                        // remover variavel depois
+//                        boolean aluno = true;
+//                        switch (aluno) {
+//                            case true:
+//                                System.out.println("======= Digite o nome do Aluno =======");
+//                            case false:
+//                                System.out.println("Nome inválido, tente novamente");
+//                            default:
+//                                System.out.println("Algo deu errado, Tente novamente");
+//                        }
+                    }
                 }
             }
         }
