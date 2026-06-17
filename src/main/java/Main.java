@@ -1,11 +1,13 @@
 
 import gymproject.service.AlunoService;
+import gymproject.service.UtilitarioService;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
+        UtilitarioService ut = new UtilitarioService();
         Scanner s = new Scanner(System.in);
         boolean ativo = true;
         // variaveis de autorização
@@ -75,8 +77,6 @@ public class Main {
                     if (input.equalsIgnoreCase("x")) {
                         autenticadoAdm = false;
                     }
-                    // Novo scan de buffer, evita erros de passagem de dados, não remover
-                    s.next();
                     switch (tipoMenu) {
                         case 1:
                             cadAluno = true;
@@ -112,16 +112,67 @@ public class Main {
 
                 }
                 while (cadAluno) {
-                    System.out.println("========== Cadastrar Aluno ===========\n" +
-                            "Digite o CPF do Aluno \n");
+                    String cpf = null; String pNome = null; String mNome = null;
+                    String sNome = null; String telefone = null; LocalDate dataNascimento = null;
+                    String nomeEmerg = null; String telefoneEmerg = null;
+
+                    String input = null;
+                    System.out.println("========== Cadastrar Aluno ===========\n");
                     boolean cadCpf = true;
                     while (cadCpf) {
-                        String nome = s.nextLine().trim();
+                        System.out.println("Digite o CPF do Aluno");
+                        input = s.nextLine().trim();
                         // Nesse momento, o metodo deve receber esse dado e retornar se passou ou não
-                        if (nome.equalsIgnoreCase("x")) {
+                        if (input.equalsIgnoreCase("x")) {
+                            System.out.println("======== Cancelado ========");
                             cadAluno = false;
+                            cadCpf = false;
                             menuCentral = true;
+                        } else {
+                            switch (ut.cpfValido(input)){
+                                case 1 ->
+                                    System.out.println("Campo Vazio, tente novamente");
+                                case 2 ->
+                                    System.out.println("Escreva somente até 11 caracteres");
+                                case 3 -> {
+                                    cpf = input;
+                                    System.out.println("====== Ok =======" + cpf);
+                                    cadCpf = false;
+                                }
+                                case 4 ->
+                                    System.out.println("Digite somente números");
+                                default ->
+                                    System.out.println("não");
+
+                            }
                         }
+                        boolean cadNome = true;
+                        while (cadNome) {
+                            System.out.println("Digite o Nome do Aluno");
+                            input = s.nextLine().trim();
+                            // Nesse momento, o metodo deve receber esse dado e retornar se passou ou não
+                            if (input.equalsIgnoreCase("x")) {
+                                System.out.println("======== Cancelado ========");
+                                cadAluno = false;
+                                cadNome = false;
+                                menuCentral = true;
+                            } else {
+                                switch (ut.cpfValido(input)) {
+                                    case 1 -> System.out.println("Campo Vazio, tente novamente");
+                                    case 2 -> System.out.println("Escreva somente até 11 caracteres");
+                                    case 3 -> {
+                                        cpf = input;
+                                        System.out.println("====== Ok =======" + cpf);
+                                        cadCpf = false;
+                                    }
+                                }
+
+                                }
+                            }
+
+
+
+
                         // remover variavel depois
 //                        boolean aluno = true;
 //                        switch (aluno) {
