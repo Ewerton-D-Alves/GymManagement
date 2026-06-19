@@ -2,6 +2,7 @@ package test;
 
 import gymproject.exceptions.PessoaException;
 import gymproject.models.*;
+import gymproject.repository.LoginRepository;
 import gymproject.repository.PessoaRepository;
 import gymproject.service.*;
 
@@ -22,7 +23,7 @@ public class Testera {
         boolean autenticadoProf = false;
         boolean cadastroboo = true;
 
-
+        //Repositórios
         PessoaRepository pessoaRepository = new PessoaRepository() {
             @Override
             public Optional<Pessoa> buscarCpf(String cpf) {
@@ -158,16 +159,60 @@ public class Testera {
             public void removerUsuario(String loginAcesso, String senhaAcesso) {
             }
         };
-        //var gerente = new Gerente();
-        //var professor = new Professor();
-        //var recepcionista = new Recepcionista();
-        //var aluno = new Aluno();
+        LoginRepository loginRepository = new LoginRepository() {
+            @Override
+            public void cadastrarUsuario(Staff staff) {
 
+            }
+
+            @Override
+            public void atualizarUsuario(Staff staff) {
+
+            }
+
+            @Override
+            public Optional<Staff> buscarLogin(String loginAcesso) {
+                return Optional.empty();
+            }
+
+            @Override
+            public Optional<Staff> buscarSenha(String senhaAcesso) {
+                return Optional.empty();
+            }
+
+            @Override
+            public Optional<Staff> buscarCpfStaff(String cpf) {
+                return Optional.empty();
+            }
+
+            @Override
+            public Optional<Staff> buscarUsuario(String loginAcesso, String senhaAcesso) {
+                return Optional.empty();
+            }
+
+            @Override
+            public void alterarLogin(String loginAcesso) {
+
+            }
+
+            @Override
+            public void alterarSenha(String senhaAcesso) {
+
+            }
+
+            @Override
+            public void removerUsuario(String loginAcesso, String senhaAcesso) {
+
+            }
+        };
+
+        //Serviços
         PessoaService pessoaService = new PessoaService(pessoaRepository);
         GerenteService gerenteService = new GerenteService(pessoaRepository);
         ProfessorService professorService = new ProfessorService(pessoaRepository);
         RecepcionistaService recepcionistaService = new RecepcionistaService(pessoaRepository);
         AlunoService alunoService = new AlunoService(pessoaRepository);
+        StaffService staffService = new StaffService(loginRepository);
 
         DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         while (cadastroboo) {
@@ -230,7 +275,7 @@ public class Testera {
                 String login = sc.nextLine();
                 System.out.println("Digite sua Senha;");
                 String senha = sc.nextLine();
-
+                staffService.verificarAcesso(login, senha);
 
                 // NESSE LOCAL PRECISO DE MÉTODOS QUE RECEBAM E COMPAREM SE EXISTE PERFIL E SENHA
                 // COMPATIVEIS COM DADOS EXISTENTES NO BANCO DE DADOS
