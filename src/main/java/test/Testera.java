@@ -22,6 +22,7 @@ public class Testera {
         boolean autenticadoSect = false;
         boolean autenticadoProf = false;
         boolean cadastroboo = true;
+        boolean cadastrologin = true;
 
         //Repositórios
         PessoaRepository pessoaRepository = new PessoaRepository() {
@@ -264,6 +265,16 @@ public class Testera {
                     System.out.println(erro.getMessage());
                 }
             }
+        }
+        while (cadastrologin) {
+            System.out.println("><>< Bem-vindo ao cadastro de funcionários. ><><");
+            System.out.print("Digite o seu CPF: ");
+            String cpf = sc.nextLine();
+            System.out.print("Digite seu login: ");
+            String login = sc.nextLine();
+            System.out.println("Digite sua senha: ");
+            String senha = sc.nextLine();
+            staffService.cadastrarAcesso(cpf, login, senha);
         }
 
         while (ativo) {
