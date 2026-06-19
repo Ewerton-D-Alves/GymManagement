@@ -2,6 +2,8 @@ package gymproject.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +20,11 @@ public class Staff extends Pessoa {
     private String loginAcesso;
     @Column(name = "senha", nullable = true,length = 255)
     private String senhaAcesso;
+
+    @OneToOne
+    @JoinColumn(name = "pessoa_id", nullable = false)
+    private Pessoa pessoa;
+
 
     public Staff(String primeiroNome, String sobrenome,
                  String cpf, String telefone, LocalDate dataNascimento,
