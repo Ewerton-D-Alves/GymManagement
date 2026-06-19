@@ -21,7 +21,7 @@ public class Testera {
         boolean autenticadoAdm = false;
         boolean autenticadoSect = false;
         boolean autenticadoProf = false;
-        boolean cadastroboo = true;
+        boolean cadastroboo = false;
         boolean cadastrologin = true;
 
         //Repositórios
@@ -216,7 +216,7 @@ public class Testera {
         StaffService staffService = new StaffService(loginRepository);
 
         DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        while (cadastroboo) {
+        while(cadastroboo = true) {
             System.out.println("><>< Bem-vindo ao cadastro de funcionários. ><><");
             System.out.println("Digite o nome");
             String nome = sc.nextLine();
@@ -248,7 +248,8 @@ public class Testera {
                 } catch (PessoaException erro) {
                     System.out.println(erro.getMessage());
                 }
-            } if (funcao.equalsIgnoreCase("Recepcionista") || funcao.equalsIgnoreCase("2")) {
+            }
+            if (funcao.equalsIgnoreCase("Recepcionista") || funcao.equalsIgnoreCase("2")) {
                 try {
                     pessoaService.cadastrarRecepcionista(recepcionista);
                 } catch (PessoaException erro) {
@@ -265,6 +266,13 @@ public class Testera {
                     System.out.println(erro.getMessage());
                 }
             }
+            System.out.println("Deseja cadastrar outro usuário?");
+            System.out.println("1. Sim \n2. Não.");
+            String loopCadastro = sc.nextLine().trim();
+            if (loopCadastro.equals("2") || loopCadastro.equalsIgnoreCase("Não")) {
+                break;
+            }
+            cadastroboo = false;
         }
         while (cadastrologin) {
             System.out.println("><>< Bem-vindo ao cadastro de funcionários. ><><");
@@ -272,11 +280,10 @@ public class Testera {
             String cpf = sc.nextLine();
             System.out.print("Digite seu login: ");
             String login = sc.nextLine();
-            System.out.println("Digite sua senha: ");
+            System.out.print("Digite sua senha: ");
             String senha = sc.nextLine();
             staffService.cadastrarAcesso(cpf, login, senha);
         }
-
         while (ativo) {
             int menuTipo = 0;
             int tipo = 0;
