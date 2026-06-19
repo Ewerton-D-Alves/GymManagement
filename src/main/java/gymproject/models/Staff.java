@@ -18,15 +18,13 @@ public class Staff extends Pessoa {
     private String loginAcesso;
     @Column(name = "senha", nullable = true,length = 255)
     private String senhaAcesso;
-    private String funcao;
 
     public Staff(String primeiroNome, String sobrenome,
                  String cpf, String telefone, LocalDate dataNascimento,
                  String telefoneEmerg, String nomeEmerg,
-                 String loginAcesso, String senhaAcesso, String funcao) {
+                 String loginAcesso, String senhaAcesso) {
         super(primeiroNome, sobrenome, cpf, telefone, dataNascimento, telefoneEmerg, nomeEmerg);
         this.loginAcesso = loginAcesso;
         this.senhaAcesso = senhaAcesso;
-        this.funcao = funcao;
     }
 }

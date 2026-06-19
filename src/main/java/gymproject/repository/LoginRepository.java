@@ -17,9 +17,6 @@ public interface LoginRepository {
     Optional<Staff> buscarLogin(String loginAcesso);
 
     @Find
-    Optional<Staff> buscarSenha(String senhaAcesso);
-
-    @Find
     Optional<Staff> buscarCpfStaff(String cpf);
 
     @Update

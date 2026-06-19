@@ -15,8 +15,8 @@ public class Recepcionista extends Staff {
     public Recepcionista(String primeiroNome, String sobrenome,
                          String cpf, String telefone, LocalDate dataNascimento,
                          String telefoneEmerg, String nomeEmerg,
-                         String loginAcesso, String senhaAcesso, String funcao) {
+                         String loginAcesso, String senhaAcesso) {
         super(primeiroNome, sobrenome, cpf, telefone, dataNascimento,
-                telefoneEmerg, nomeEmerg, loginAcesso, senhaAcesso, funcao);
+                telefoneEmerg, nomeEmerg, loginAcesso, senhaAcesso);
     }
 }
