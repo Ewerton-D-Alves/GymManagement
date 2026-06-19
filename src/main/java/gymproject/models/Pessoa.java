@@ -15,8 +15,6 @@ import java.time.LocalDate;
 public abstract class Pessoa {
     @Column(name = "primeiro_nome", nullable = false, length = 100)
     private String primeiroNome;
-    @Column(name = "nome_do_meio", nullable = false, length = 100)
-    private String meioNome;
     @Column(nullable = false, length = 100)
     private String sobrenome;
     @Id @Column(length = 11)

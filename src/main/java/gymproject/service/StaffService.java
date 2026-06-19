@@ -1,34 +1,83 @@
 package gymproject.service;
 
-import gymproject.exceptions.StaffNotFoundException;
+import gymproject.exceptions.PessoaException;
 import gymproject.models.Staff;
+import gymproject.repository.LoginRepository;
+import gymproject.repository.PessoaRepository;
 import gymproject.repository.StaffRepository;
 import lombok.RequiredArgsConstructor;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 public class StaffService {
-    private final StaffRepository staffRepository;
+    private final LoginRepository loginRepository;
 
-    public void cadastrarUsuario(Staff staffNovo) throws StaffNotFoundException {
-        if (staffNovo.getLoginAcesso() == null || staffNovo.getLoginAcesso().isBlank()) {
-            throw new StaffNotFoundException("O login é obrigatório.");
-        }
-        if (staffNovo.getSenhaAcesso() == null || staffNovo.getSenhaAcesso().isBlank()) {
-            throw new StaffNotFoundException("A senha é obrigatória.");
-        }
 
-        verificarLogin(staffNovo.getLoginAcesso());
-        staffRepository.cadastrarUsuario(staffNovo);
+    //Metodo para cadastrar o usuario
+    public void cadastrarUsuario(Staff staffNovo) throws PessoaException {
+        if (staffNovo.getCpf() == null || staffNovo.getCpf().isBlank()) {
+            throw new PessoaException("O CPF é obrigatório.");
+        }
+        //verificar aqui
+        loginRepository.cadastrarUsuario(staffNovo);
         System.out.println("Usuário cadastrado.");
-
     }
+    //Metodo para cadastrar o acesso
 
-    private void verificarLogin(String loginAcesso) throws StaffNotFoundException {
-        Optional<Staff> loginCadastrado = staffRepository.buscarLogin(loginAcesso);
+    public void cadastrarAcesso(String cpf, String loginAcesso, String senhaAcesso) {
+
+        //Aqui verifica se o usuario com o cpf de entrada existe.
+
+        Optional<Staff> usuario = loginRepository.buscarCpfStaff(cpf);
+        if (usuario.isEmpty()) {
+            throw new PessoaException("Nenhum funcionário cadastrado com esse CPF: " + cpf);
+        }
+        if (loginAcesso == null || loginAcesso.isBlank()) {
+            throw new PessoaException("O login é obrigatório.");
+        }
+        if (senhaAcesso == null || senhaAcesso.isBlank()) {
+            throw new PessoaException("A senha é obrigatória.");
+
+        }   //verifica se o login ja existe para outro usuário;
+        verificarLogin(loginAcesso);
+        //Retira a pessoa do "Optional" para podermos manipular
+        //E adicionando o login e a senha nova ao "existeSim" e mandando para o repositório.
+
+        Staff existeSim = usuario.get();
+        existeSim.setLoginAcesso(loginAcesso);
+        existeSim.setSenhaAcesso(senhaAcesso);
+        loginRepository.atualizarUsuario(existeSim);
+    }
+    //Metodo para verificar se o login ja existe.
+
+    private void verificarLogin(String loginAcesso) throws PessoaException {
+        Optional<Staff> loginCadastrado = loginRepository.buscarLogin(loginAcesso);
         if (loginCadastrado.isPresent()) {
-            throw new StaffNotFoundException("Já existe um usuário com o mesmo login cadastrado.");
+            throw new PessoaException("Já existe um usuário com o mesmo login cadastrado.");
         }
     }
 
+    public void verificarAcesso(String loginAcesso, String senhaAcesso) throws PessoaException {
+
+        Optional<Staff> usuario = loginRepository.buscarUsuario(loginAcesso, senhaAcesso);
+        if (usuario.isEmpty()) {
+            throw new PessoaException("Nenhum funcionário cadastrado.");
+        } if (loginAcesso == null || loginAcesso.isBlank()) {
+            throw new PessoaException("O login é obrigatório.");
+        } if (senhaAcesso == null || senhaAcesso.isBlank()) {
+            throw new PessoaException("A senha é obrigatória.");
+        }
+        //Retira a pessoa do "Optional" para podermos manipular
+        //E adicionando o login e a senha nova ao "existeSim"
+        Staff cadastrado = usuario.get();
+        String loginUsuario = cadastrado.getLoginAcesso();
+        String senhaUsuario = cadastrado.getSenhaAcesso();
+        if (loginAcesso.equals(loginUsuario) || !senhaAcesso.equals(senhaUsuario))
+            if (!loginAcesso.equals(loginUsuario) || senhaAcesso.equals(senhaUsuario)) {
+            System.out.println("Login ou senha estão incorretos;");
+        }
+    }
 }
+
+
+

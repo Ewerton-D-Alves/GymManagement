@@ -17,12 +17,13 @@ public class Aluno extends Pessoa {
  @Column(nullable = false)
  private UUID matricula;
 
- public Aluno (String primeiroNome, String nomeMeio, String sobrenome, String cpf, String telefone, LocalDate dataNascimento,
+ public Aluno (String primeiroNome, String sobrenome, String cpf, String telefone, LocalDate dataNascimento,
          String nomeEmerg, String telefoneEmerg, UUID matricula) {
-  super(primeiroNome, nomeMeio,sobrenome, cpf, telefone, dataNascimento, nomeEmerg, telefoneEmerg);
+  super(primeiroNome,sobrenome, cpf, telefone, dataNascimento, nomeEmerg, telefoneEmerg);
 
   this.matricula = matricula;
  }
+
  @Override
  public String toString() {
   return "Aluno (" +

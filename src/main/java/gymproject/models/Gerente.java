@@ -6,16 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-
 @NoArgsConstructor
 @Getter @Setter
 @Entity
 public class Gerente extends Staff {
-    public Gerente(String primeiroNome, String meioNome, String sobrenome,
+    public Gerente(String primeiroNome, String sobrenome,
                    String cpf, String telefone, LocalDate dataNascimento,
                    String telefoneEmerg, String nomeEmerg,
                    String loginAcesso, String senhaAcesso) {
-        super(primeiroNome, meioNome, sobrenome, cpf, telefone,
-                dataNascimento, telefoneEmerg, nomeEmerg, loginAcesso, senhaAcesso);
+        super(primeiroNome, sobrenome, cpf, telefone, dataNascimento, telefoneEmerg, nomeEmerg, loginAcesso, senhaAcesso);
     }
 }

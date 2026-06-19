@@ -12,11 +12,11 @@ import java.time.LocalDate;
 @Entity
 public class Recepcionista extends Staff {
 
-    public Recepcionista(String primeiroNome, String meioNome, String sobrenome,
+    public Recepcionista(String primeiroNome, String sobrenome,
                          String cpf, String telefone, LocalDate dataNascimento,
                          String telefoneEmerg, String nomeEmerg,
                          String loginAcesso, String senhaAcesso) {
-        super(primeiroNome, meioNome, sobrenome, cpf, telefone, dataNascimento,
+        super(primeiroNome, sobrenome, cpf, telefone, dataNascimento,
                 telefoneEmerg, nomeEmerg, loginAcesso, senhaAcesso);
     }
 }
