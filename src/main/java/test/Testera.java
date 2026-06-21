@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Testera {
     public static void main(String[] args) {
@@ -21,8 +22,8 @@ public class Testera {
         boolean autenticadoAdm = false;
         boolean autenticadoSect = false;
         boolean autenticadoProf = false;
-        boolean cadastroboo = true;
-
+        boolean cadastroPessoa = true;
+        boolean cadastroStaff = true;
         //Repositórios
         PessoaRepository pessoaRepository = new PessoaRepository() {
             @Override
@@ -215,14 +216,15 @@ public class Testera {
         StaffService staffService = new StaffService(loginRepository);
 
         DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        while (cadastroboo) {
-            System.out.println("><>< Bem-vindo ao cadastro de funcionários. ><><");
+        while (cadastroPessoa) {
+            System.out.println("><>< Bem-vindo a área de cadastro ><><");
+            System.out.println("Digite o CPF");
+            String cpf = sc.nextLine();
+            pessoaService.verificarPessoa(cpf);
             System.out.println("Digite o nome");
             String nome = sc.nextLine();
             System.out.println("Digite o sobrenome");
             String sobrenome = sc.nextLine();
-            System.out.println("Digite o CPF");
-            String cpf = sc.nextLine();
             System.out.println("Digite o telefone");
             String telefone = sc.nextLine();
             System.out.println("Digite a data de nascimento");
@@ -232,38 +234,70 @@ public class Testera {
             String telEmerg = sc.nextLine();
             System.out.println("Digite o nome do contato de emergência");
             String contatoEmerg = sc.nextLine();
-            System.out.println("Digite a função: \n 1. Professor. \n 2. Recepcionista.");
-            String funcao = sc.nextLine();
             String login = null;
             String senha = null;
-
+            String matricula = UUID.randomUUID().toString();
             var gerente = new Gerente(nome, sobrenome, cpf, telefone, dataHora, telEmerg, contatoEmerg, login, senha);
             var recepcionista = new Recepcionista(nome, sobrenome, cpf, telefone, dataHora, telEmerg, contatoEmerg, login, senha);
             var professor = new Professor(nome, sobrenome, cpf, telefone, dataHora, telEmerg, contatoEmerg, login, senha);
+            var aluno = new Aluno(nome, sobrenome, cpf, telefone, dataHora, telEmerg, contatoEmerg, matricula);
+            System.out.println("Diga abaixo qual atividade o integrante faz parte:");
+            System.out.println("Digite: \n 1. Aluno \n 2. Professor \n 3. Recepcionista \n 4. Gerente");
+            String funcao = sc.nextLine().trim();
 
-            if (funcao.equalsIgnoreCase("Professor") || funcao.equalsIgnoreCase("1")) {
+            if (funcao.equalsIgnoreCase("Aluno") || funcao.equalsIgnoreCase("1")) {
+                try {
+                    pessoaService.cadastrarAluno(aluno);
+                } catch (PessoaException erro) {
+                    System.out.println(erro.getMessage());
+                }
+            } if (funcao.equalsIgnoreCase("Professor") || funcao.equalsIgnoreCase("2")) {
                 try {
                     pessoaService.cadastrarProfessor(professor);
                 } catch (PessoaException erro) {
                     System.out.println(erro.getMessage());
                 }
-            } if (funcao.equalsIgnoreCase("Recepcionista") || funcao.equalsIgnoreCase("2")) {
+            } if (funcao.equalsIgnoreCase("Recepcionista") || funcao.equalsIgnoreCase("3")) {
                 try {
                     pessoaService.cadastrarRecepcionista(recepcionista);
                 } catch (PessoaException erro) {
                     System.out.println(erro.getMessage());
                 }
             }
+
             //PARA PODER CADASTRAR O LOGIN, SOLICITAR PARA REALIZAR O LOGIN//COLOCAR AQUI APÓS A CRIAÇÃO
             //DO LOGIN, AI AQUI VERIFICA O LOGIN E DEPOOOOIS PERMITE CADASTRAR O LOGIN DE GERENTE.
             //AI A VERIFICAÇÃO FICARÁ APENAS PARA UM OUTRO GERENTE E O ADMIN/ADMIN
+
             if (funcao.equals("Gerente")) {
-                try {
-                    pessoaService.cadastrarGerente(gerente);
-                } catch (PessoaException erro) {
-                    System.out.println(erro.getMessage());
+                System.out.print("Digite seu login: ");
+                String loginGerente = sc.nextLine();
+                System.out.print("Digite sua Senha: ");
+                String senhaGerente = sc.nextLine();
+                Staff gerenteExiste = staffService.verificarAcesso(loginGerente, senhaGerente);
+                if (gerenteExiste instanceof Gerente) {
+                    try {
+                        pessoaService.cadastrarGerente(gerente);
+                    } catch (PessoaException erro) {
+                        System.out.println(erro.getMessage());
+                    }
                 }
             }
+        }
+
+        while(cadastroStaff) {
+
+            System.out.println("><>< Bem-vindo ao cadastro de usuário ><><");
+            System.out.print("Digite seu nome: ");
+            String nomeInutil = sc.nextLine();
+            System.out.print("Digite seu CPF :");
+            String cpf = sc.nextLine();
+            System.out.print("Digite o login: ");
+            String login = sc.nextLine();
+            System.out.print("Digite a senha: ");
+            String senha = sc.nextLine();
+            staffService.cadastrarAcesso(cpf, login, senha);
+
         }
 
         while (ativo) {
@@ -275,28 +309,23 @@ public class Testera {
                 String login = sc.nextLine();
                 System.out.println("Digite sua Senha;");
                 String senha = sc.nextLine();
-                staffService.verificarAcesso(login, senha);
-
-                // NESSE LOCAL PRECISO DE MÉTODOS QUE RECEBAM E COMPAREM SE EXISTE PERFIL E SENHA
-                // COMPATIVEIS COM DADOS EXISTENTES NO BANCO DE DADOS
-                // dados de teste são: Adm letra X, Secretária letra Y, e Professor letra Z.
-                if (login.equals("x") && senha.equals("x")) {
-
+                Staff usuarioExiste = staffService.verificarAcesso(login, senha);
+                if (usuarioExiste instanceof Gerente) {
                     menuTipo = 1;
-                } else if (login.equals("y") && senha.equals("y")) {
+                }
+                if (usuarioExiste instanceof Professor) {
                     menuTipo = 2;
-                } else if (login.equals("z") && senha.equals("z")) {
+                }
+                if (usuarioExiste instanceof Recepcionista) {
                     menuTipo = 3;
                 }
                 switch (menuTipo) {
                     case 1:
                         autenticadoAdm = true;
                     case 2:
-                        autenticadoSect = true;
-                    case 3:
                         autenticadoProf = true;
-                    default:
-                        System.out.println("Login ou senha inválidos");
+                    case 3:
+                        autenticadoSect = true;
                 }
             }
             // Admin reverterá para aqui até deslogar

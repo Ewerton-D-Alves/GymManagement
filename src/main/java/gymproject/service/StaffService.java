@@ -57,25 +57,21 @@ public class StaffService {
         }
     }
 
-    public void verificarAcesso(String loginAcesso, String senhaAcesso) throws PessoaException {
+    public Staff verificarAcesso(String loginAcesso, String senhaAcesso) throws PessoaException {
 
-        Optional<Staff> usuario = loginRepository.buscarUsuario(loginAcesso, senhaAcesso);
-        if (usuario.isEmpty()) {
-            throw new PessoaException("Nenhum funcionário cadastrado.");
-        } if (loginAcesso == null || loginAcesso.isBlank()) {
+        if (loginAcesso == null || loginAcesso.isBlank()) {
             throw new PessoaException("O login é obrigatório.");
-        } if (senhaAcesso == null || senhaAcesso.isBlank()) {
+        }
+        if (senhaAcesso == null || senhaAcesso.isBlank()) {
             throw new PessoaException("A senha é obrigatória.");
         }
-        //Retira a pessoa do "Optional" para podermos manipular
-        //E adicionando o login e a senha nova ao "existeSim"
-        Staff cadastrado = usuario.get();
-        String loginUsuario = cadastrado.getLoginAcesso();
-        String senhaUsuario = cadastrado.getSenhaAcesso();
-        if (loginAcesso.equals(loginUsuario) || !senhaAcesso.equals(senhaUsuario))
-            if (!loginAcesso.equals(loginUsuario) || senhaAcesso.equals(senhaUsuario)) {
-            System.out.println("Login ou senha estão incorretos;");
+        Optional<Staff> usuario = loginRepository.buscarUsuario(loginAcesso, senhaAcesso);
+        if (usuario.isEmpty()) {
+            throw new PessoaException("Login ou senha estão incorretos, ou funcionário não cadastrado.");
         }
+        System.out.println("Seja bem vindo, " + loginAcesso);
+        Staff usuarioExiste = usuario.get();
+        return usuarioExiste;
     }
 }
 

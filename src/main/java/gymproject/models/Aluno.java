@@ -15,10 +15,10 @@ import java.util.UUID;
 public class Aluno extends Pessoa {
 
  @Column(nullable = false)
- private UUID matricula;
+ private String matricula;
 
  public Aluno (String primeiroNome, String sobrenome, String cpf, String telefone, LocalDate dataNascimento,
-         String nomeEmerg, String telefoneEmerg, UUID matricula) {
+         String nomeEmerg, String telefoneEmerg, String matricula) {
   super(primeiroNome,sobrenome, cpf, telefone, dataNascimento, nomeEmerg, telefoneEmerg);
 
   this.matricula = matricula;
