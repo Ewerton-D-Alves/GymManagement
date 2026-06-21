@@ -224,16 +224,8 @@ public class Testera {
 
         while(cadastroStaff) {
 
-            System.out.println("><>< Bem-vindo ao cadastro de usuário ><><");
-            System.out.print("Digite seu nome: ");
-            String nomeInutil = sc.nextLine();
-            System.out.print("Digite seu CPF :");
-            String cpf = sc.nextLine();
-            System.out.print("Digite o login: ");
-            String login = sc.nextLine();
-            System.out.print("Digite a senha: ");
-            String senha = sc.nextLine();
-            staffService.cadastrarAcesso(cpf, login, senha);
+            //cadastra o usuário da Staff
+            pessoaService.cadastrarStaff();
 
         }
 

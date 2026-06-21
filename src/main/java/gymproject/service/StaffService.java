@@ -1,17 +1,21 @@
 package gymproject.service;
 
 import gymproject.exceptions.PessoaException;
-import gymproject.models.Staff;
+import gymproject.models.*;
 import gymproject.repository.LoginRepository;
 import gymproject.repository.PessoaRepository;
 import gymproject.repository.StaffRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 @RequiredArgsConstructor
 public class StaffService {
     private final LoginRepository loginRepository;
 
+    Scanner sc = new Scanner(System.in);
 
     //Metodo para cadastrar o usuario
     public void cadastrarUsuario(Staff staffNovo) throws PessoaException {
@@ -73,6 +77,7 @@ public class StaffService {
         Staff usuarioExiste = usuario.get();
         return usuarioExiste;
     }
+
 }
 
 
