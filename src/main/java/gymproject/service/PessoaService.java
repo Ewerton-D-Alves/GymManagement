@@ -2,15 +2,70 @@ package gymproject.service;
 
 import gymproject.exceptions.PessoaException;
 import gymproject.models.*;
+import gymproject.repository.LoginRepository;
 import gymproject.repository.PessoaRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import java.util.Scanner;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class PessoaService {
     private final PessoaRepository pessoaRepository;
 
+    Scanner sc = new Scanner(System.in);
+    LoginRepository loginRepository = new LoginRepository() {
+        @Override
+        public void cadastrarUsuario(Staff staff) {
+
+        }
+
+        @Override
+        public void atualizarUsuario(Staff staff) {
+
+        }
+
+        @Override
+        public Optional<Staff> buscarLogin(String loginAcesso) {
+            return Optional.empty();
+        }
+
+        @Override
+        public Optional<Staff> buscarSenha(String senhaAcesso) {
+            return Optional.empty();
+        }
+
+        @Override
+        public Optional<Staff> buscarCpfStaff(String cpf) {
+            return Optional.empty();
+        }
+
+        @Override
+        public Optional<Staff> buscarUsuario(String loginAcesso, String senhaAcesso) {
+            return Optional.empty();
+        }
+
+        @Override
+        public void alterarLogin(String loginAcesso) {
+
+        }
+
+        @Override
+        public void alterarSenha(String senhaAcesso) {
+
+        }
+
+        @Override
+        public void removerUsuario(String loginAcesso, String senhaAcesso) {
+
+        }
+    };
+    StaffService staffService = new StaffService(loginRepository);
+
+    DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     //Para verificar se o CPF ta prenchido corretamente, pois ele é obrigatório.
 
     //Para verificar se a pessoa existe no Banco de dados, ideal utilizar o VerificarCpfPessoa antes.
@@ -47,6 +102,73 @@ public class PessoaService {
     private void verificarCpfPessoa(String cpf) throws PessoaException {
         if (cpf == null || cpf.isBlank()) {
             throw new PessoaException("O CPF é obrigatório.");
+        }
+    }
+
+    public void cadastrarPessoa() throws PessoaException {
+
+        System.out.println("><>< Bem-vindo a área de cadastro ><><");
+        System.out.println("Digite o CPF");
+        String cpf = sc.nextLine();
+        verificarPessoa(cpf);
+        System.out.println("Digite o nome");
+        String nome = sc.nextLine();
+        System.out.println("Digite o sobrenome");
+        String sobrenome = sc.nextLine();
+        System.out.println("Digite o telefone");
+        String telefone = sc.nextLine();
+        System.out.println("Digite a data de nascimento");
+        String dataNascimento = sc.nextLine();
+        LocalDate dataHora = LocalDate.parse(dataNascimento, formatar);
+        System.out.println("Digite o telefone de emergencia");
+        String telEmerg = sc.nextLine();
+        System.out.println("Digite o nome do contato de emergência");
+        String contatoEmerg = sc.nextLine();
+        String login = null;
+        String senha = null;
+        String matricula = UUID.randomUUID().toString();
+        var gerente = new Gerente(nome, sobrenome, cpf, telefone, dataHora, telEmerg, contatoEmerg, login, senha);
+        var recepcionista = new Recepcionista(nome, sobrenome, cpf, telefone, dataHora, telEmerg, contatoEmerg, login, senha);
+        var professor = new Professor(nome, sobrenome, cpf, telefone, dataHora, telEmerg, contatoEmerg, login, senha);
+        var aluno = new Aluno(nome, sobrenome, cpf, telefone, dataHora, telEmerg, contatoEmerg, matricula);
+        System.out.println("Diga abaixo qual atividade o integrante faz parte:");
+        System.out.println("Digite: \n 1. Aluno \n 2. Professor \n 3. Recepcionista \n 4. Gerente");
+        String funcao = sc.nextLine().trim();
+
+        if (funcao.equalsIgnoreCase("Aluno") || funcao.equalsIgnoreCase("1")) {
+            try {
+                cadastrarAluno(aluno);
+            } catch (PessoaException erro) {
+                System.out.println(erro.getMessage());
+            }
+        }
+        if (funcao.equalsIgnoreCase("Professor") || funcao.equalsIgnoreCase("2")) {
+            try {
+                cadastrarProfessor(professor);
+            } catch (PessoaException erro) {
+                System.out.println(erro.getMessage());
+            }
+        }
+        if (funcao.equalsIgnoreCase("Recepcionista") || funcao.equalsIgnoreCase("3")) {
+            try {
+                cadastrarRecepcionista(recepcionista);
+            } catch (PessoaException erro) {
+                System.out.println(erro.getMessage());
+            }
+        }
+        if (funcao.equalsIgnoreCase("Gerente") || funcao.equalsIgnoreCase("4")) {
+            System.out.print("Digite seu login: ");
+            String loginGerente = sc.nextLine();
+            System.out.print("Digite sua Senha: ");
+            String senhaGerente = sc.nextLine();
+            Staff gerenteExiste = staffService.verificarAcesso(loginGerente, senhaGerente);
+            if (gerenteExiste instanceof Gerente) {
+                try {
+                    cadastrarGerente(gerente);
+                } catch (PessoaException erro) {
+                    System.out.println(erro.getMessage());
+                }
+            }
         }
     }
 }
