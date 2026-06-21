@@ -14,38 +14,38 @@ public class PessoaService {
     //Para verificar se o CPF ta prenchido corretamente, pois ele é obrigatório.
 
     //Para verificar se a pessoa existe no Banco de dados, ideal utilizar o VerificarCpfPessoa antes.
-    private void verificarPessoa(Pessoa pessoa) throws PessoaException {
-        verificarCpfPessoa(pessoa);
-        Optional<Pessoa> pessoaPresente = pessoaRepository.buscarCpf(pessoa.getCpf());
+    public void verificarPessoa(String cpf) throws PessoaException {
+        verificarCpfPessoa(cpf);
+        Optional<Pessoa> pessoaPresente = pessoaRepository.buscarCpf(cpf);
         if (pessoaPresente.isPresent()) {
             throw new PessoaException("Já existe uma pessoa cadastrada com esse CPF.");
         }
     }
     public void cadastrarAluno(Aluno aluno) throws PessoaException {
-        verificarPessoa(aluno);
+        verificarPessoa(aluno.getCpf());
         pessoaRepository.cadastrarAluno(aluno);
         System.out.println("Aluno cadastrado com sucesso.");
     }
 
     public void cadastrarGerente(Gerente gerente) throws PessoaException {
-        verificarPessoa(gerente);
+        verificarPessoa(gerente.getCpf());
         pessoaRepository.cadastrarGerente(gerente);
         System.out.println("Gerente cadastrado com sucesso");
     }
 
     public void cadastrarProfessor(Professor professor) throws  PessoaException {
-        verificarPessoa(professor);
+        verificarPessoa(professor.getCpf());
         pessoaRepository.cadastrarProfessor(professor);
         System.out.println("Professor cadastrado com sucesso");
     }
 
     public void cadastrarRecepcionista(Recepcionista recepcionista) throws PessoaException {
-        verificarPessoa(recepcionista);
+        verificarPessoa(recepcionista.getCpf());
         pessoaRepository.cadastrarRecepcionista(recepcionista);
         System.out.println("Recepcionista cadastrado com sucesso");
     }
-    private void verificarCpfPessoa(Pessoa pessoa) throws PessoaException {
-        if (pessoa.getCpf() == null || pessoa.getCpf().isBlank()) {
+    private void verificarCpfPessoa(String cpf) throws PessoaException {
+        if (cpf == null || cpf.isBlank()) {
             throw new PessoaException("O CPF é obrigatório.");
         }
     }
