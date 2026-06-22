@@ -220,6 +220,12 @@ public class Testera {
         while (cadastroPessoa) {
             //cadastra pessoa, pode ser puxado para quaisquer menus.
             pessoaService.cadastrarPessoa();
+            System.out.println("Deseja cadastrar outra pessoa?");
+            System.out.println("S - Sim\nX - Não");
+            String finalizar = sc.nextLine().trim();
+            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
+             cadastroPessoa = false;
+            }
         }
 
         while(cadastroStaff) {
