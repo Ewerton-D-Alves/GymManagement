@@ -1,7 +1,5 @@
 package gymproject.models;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter @Setter
 @MappedSuperclass
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pessoa {
     @Column(name = "primeiro_nome", nullable = false, length = 100)
     private String primeiroNome;

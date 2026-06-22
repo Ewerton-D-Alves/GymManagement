@@ -1,6 +1,7 @@
 package gymproject.models;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter @Setter
 @Entity
+@PrimaryKeyJoinColumn(name="cpf")
 public class Aluno extends Pessoa {
 
  @Column(nullable = false)

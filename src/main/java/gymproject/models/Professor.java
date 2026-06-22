@@ -1,6 +1,7 @@
 package gymproject.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter @Setter
 @Entity
+@PrimaryKeyJoinColumn(name="cpf")
 public class Professor extends Staff {
 
     public Professor(String primeiroNome, String sobrenome,
