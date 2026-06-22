@@ -108,21 +108,21 @@ public class PessoaService {
     public void cadastrarPessoa() throws PessoaException {
 
         System.out.println("><>< Bem-vindo a área de cadastro ><><");
-        System.out.println("Digite o CPF");
+        System.out.print("Digite o CPF: ");
         String cpf = sc.nextLine();
         verificarPessoa(cpf);
-        System.out.println("Digite o nome");
+        System.out.print("Digite o nome: ");
         String nome = sc.nextLine();
-        System.out.println("Digite o sobrenome");
+        System.out.print("Digite o sobrenome: ");
         String sobrenome = sc.nextLine();
-        System.out.println("Digite o telefone");
+        System.out.print("Digite o telefone: ");
         String telefone = sc.nextLine();
-        System.out.println("Digite a data de nascimento");
+        System.out.print("Digite a data de nascimento (dd/mm/aaaa): ");
         String dataNascimento = sc.nextLine();
         LocalDate dataHora = LocalDate.parse(dataNascimento, formatar);
-        System.out.println("Digite o telefone de emergencia");
+        System.out.print("Digite o telefone de emergencia: ");
         String telEmerg = sc.nextLine();
-        System.out.println("Digite o nome do contato de emergência");
+        System.out.print("Digite o nome do contato de emergência: ");
         String contatoEmerg = sc.nextLine();
         String login = null;
         String senha = null;
@@ -174,7 +174,7 @@ public class PessoaService {
 
     public void cadastrarStaff () throws PessoaException{
         System.out.println("><>< Bem-vindo ao cadastro de usuário ><><");
-        System.out.print("Digite seu CPF :");
+        System.out.print("Digite seu CPF: ");
         String cpf = sc.nextLine();
         verificarPessoa(cpf);
         System.out.print("Digite seu nome: ");
@@ -185,7 +185,11 @@ public class PessoaService {
         String login = sc.nextLine();
         System.out.print("Digite a senha: ");
         String senha = sc.nextLine();
-        staffService.cadastrarAcesso(cpf, login, senha);
+        try {
+            staffService.cadastrarAcesso(cpf, login, senha);
+        } catch (PessoaException erro) {
+            System.out.println(erro.getMessage());
+        }
     }
 
 }

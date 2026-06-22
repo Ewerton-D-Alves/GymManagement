@@ -228,14 +228,21 @@ public class Testera {
             }
         }
 
-        while(cadastroStaff) {
+        while (cadastroStaff) {
 
             //cadastra o usuário da Staff
             pessoaService.cadastrarStaff();
+            System.out.println("Deseja cadastrar outro usuário?");
+            System.out.println("S - Sim\nX - Não");
+            String finalizar = sc.nextLine().trim();
+            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
+                cadastroStaff = false;
+            }
 
         }
 
         while (ativo) {
+            Staff usuarioExiste = null;
             int menuTipo = 0;
             int tipo = 0;
             while (!autenticadoAdm || !autenticadoProf || !autenticadoSect) {
@@ -244,7 +251,18 @@ public class Testera {
                 String login = sc.nextLine();
                 System.out.println("Digite sua Senha;");
                 String senha = sc.nextLine();
-                Staff usuarioExiste = staffService.verificarAcesso(login, senha);
+                try {
+                    usuarioExiste = staffService.verificarAcesso(login, senha);
+                } catch (PessoaException erro) {
+                    System.out.println(erro.getMessage());
+                }
+                System.out.println("Deseja tentar novamente?");
+                System.out.println("S - Sim\nX - Não");
+                String finalizar = sc.nextLine().trim();
+                if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")) {
+                    break;
+                }
+
                 if (usuarioExiste instanceof Gerente) {
                     menuTipo = 1;
                 }
