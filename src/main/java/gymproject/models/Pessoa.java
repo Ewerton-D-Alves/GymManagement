@@ -6,10 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
 
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-@MappedSuperclass
+//@MappedSuperclass
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pessoa {
     @Column(name = "primeiro_nome", nullable = false, length = 100)

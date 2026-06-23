@@ -16,9 +16,9 @@ import java.time.LocalDate;
 @PrimaryKeyJoinColumn(name="cpf")
 public abstract class Staff extends Pessoa {
     //Atributos que serão de outra tabela;
-    @Column(name = "login", nullable = true, length = 255)
+    @Column(name = "login", nullable = false, length = 255)
     private String loginAcesso;
-    @Column(name = "senha", nullable = true,length = 255)
+    @Column(name = "senha", nullable = false,length = 255)
     private String senhaAcesso;
 
     public Staff(String primeiroNome, String sobrenome,
