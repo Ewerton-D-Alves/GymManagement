@@ -19,14 +19,15 @@ public abstract class Pessoa {
     private String sobrenome;
     @Id @Column(length = 11)
     private String cpf;
-    @Column(nullable = false, length = 9)
+    @Column(nullable = false, length = 20)
     private String telefone;
     @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;
-    @Column(name = "numero_contato_emergencia", nullable = false, length = 9)
+    @Column(name = "numero_contato_emergencia", nullable = false, length = 20)
     private String telefoneEmerg;
     @Column(name = "nome_contato_emergencia", nullable = false, length = 255)
     private String nomeEmerg;
+
 
     @Override
     public String toString() {

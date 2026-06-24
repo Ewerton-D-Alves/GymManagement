@@ -4,6 +4,10 @@ import gymproject.exceptions.PessoaException;
 import gymproject.models.*;
 import gymproject.repository.LoginRepository;
 import gymproject.repository.PessoaRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.RollbackException;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
@@ -15,6 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PessoaService {
     private final PessoaRepository pessoaRepository;
+
 
     Scanner sc = new Scanner(System.in);
     LoginRepository loginRepository = new LoginRepository() {
@@ -49,12 +54,12 @@ public class PessoaService {
         }
 
         @Override
-        public void alterarLogin(String loginAcesso) {
+        public void alterarLogin(String loginAcesso, String cpf) {
 
         }
 
         @Override
-        public void alterarSenha(String senhaAcesso) {
+        public void alterarSenha(String senhaAcesso, String cpf) {
 
         }
 
@@ -64,6 +69,10 @@ public class PessoaService {
         }
     };
     StaffService staffService = new StaffService(loginRepository);
+
+    //é o que vai mandar os dados para o banco
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("meuPU");
+    EntityManager em = emf.createEntityManager();
 
     DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     //Para verificar se o CPF ta prenchido corretamente, pois ele é obrigatório.
@@ -78,8 +87,14 @@ public class PessoaService {
     }
     public void cadastrarAluno(Aluno aluno) throws PessoaException {
         verificarPessoa(aluno.getCpf());
-        pessoaRepository.cadastrarAluno(aluno);
-        System.out.println("Aluno cadastrado com sucesso.");
+        try {
+            pessoaRepository.cadastrarAluno(aluno);
+            System.out.println("Aluno cadastrado com sucesso.");
+        } catch (PessoaException erro) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        }
     }
 
     public void cadastrarGerente(Gerente gerente) throws PessoaException {
@@ -136,25 +151,14 @@ public class PessoaService {
         String funcao = sc.nextLine().trim();
 
         if (funcao.equalsIgnoreCase("Aluno") || funcao.equalsIgnoreCase("1")) {
-            try {
-                cadastrarAluno(aluno);
-            } catch (PessoaException erro) {
-                System.out.println(erro.getMessage());
-            }
+            cadastrarAluno(aluno);
         }
         if (funcao.equalsIgnoreCase("Professor") || funcao.equalsIgnoreCase("2")) {
-            try {
-                cadastrarProfessor(professor);
-            } catch (PessoaException erro) {
-                System.out.println(erro.getMessage());
-            }
+            cadastrarProfessor(professor);
         }
         if (funcao.equalsIgnoreCase("Recepcionista") || funcao.equalsIgnoreCase("3")) {
-            try {
-                cadastrarRecepcionista(recepcionista);
-            } catch (PessoaException erro) {
-                System.out.println(erro.getMessage());
-            }
+            cadastrarRecepcionista(recepcionista);
+
         }
         if (funcao.equalsIgnoreCase("Gerente") || funcao.equalsIgnoreCase("4")) {
             System.out.print("Digite seu login: ");
@@ -163,11 +167,8 @@ public class PessoaService {
             String senhaGerente = sc.nextLine();
             Staff gerenteExiste = staffService.verificarAcesso(loginGerente, senhaGerente);
             if (gerenteExiste instanceof Gerente) {
-                try {
-                    cadastrarGerente(gerente);
-                } catch (PessoaException erro) {
-                    System.out.println(erro.getMessage());
-                }
+                 cadastrarGerente((Gerente) gerenteExiste);
+              //staffService.cadastrarUsuario(gerenteExiste);
             }
         }
     }

@@ -1,7 +1,5 @@
 package gymproject.models;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +16,8 @@ public class Aluno extends Pessoa {
 
  @Column(nullable = false)
  private String matricula;
+
+
 
  public Aluno (String primeiroNome, String sobrenome, String cpf, String telefone, LocalDate dataNascimento,
          String nomeEmerg, String telefoneEmerg, String matricula) {

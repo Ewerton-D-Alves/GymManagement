@@ -2,9 +2,16 @@ package test;
 
 import gymproject.exceptions.PessoaException;
 import gymproject.models.*;
+import gymproject.repository.ConnectJPA;
 import gymproject.repository.LoginRepository;
 import gymproject.repository.PessoaRepository;
+import gymproject.repository.PessoaRepository_;
 import gymproject.service.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import org.hibernate.SessionFactory;
+import org.hibernate.StatelessSession;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +25,11 @@ public class Testera {
 
         Scanner sc = new Scanner(System.in);
 
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("meuPU");
+        EntityManager em = ConnectJPA.getEntityManager();
+        SessionFactory sessionFactory = emf.unwrap(SessionFactory.class);
+        StatelessSession session = sessionFactory.openStatelessSession();
+
         boolean ativo = true;
         boolean autenticadoAdm = false;
         boolean autenticadoSect = false;
@@ -25,141 +37,8 @@ public class Testera {
         boolean cadastroPessoa = true;
         boolean cadastroStaff = true;
         //Repositórios
-        PessoaRepository pessoaRepository = new PessoaRepository() {
-            @Override
-            public Optional<Pessoa> buscarCpf(String cpf) {
-                return Optional.empty();
-            }
 
-            @Override
-            public void cadastrarAluno(Aluno aluno) {
-
-            }
-
-            @Override
-            public List<Aluno> listarAlunos() {
-                return List.of();
-            }
-
-            @Override
-            public Optional<Aluno> buscarCpfAluno(String cpf) {
-                return Optional.empty();
-            }
-
-            @Override
-            public void atualizarAluno(Aluno aluno) {
-
-            }
-
-            @Override
-            public void excluirAluno(Aluno aluno) {
-
-            }
-
-            @Override
-            public void cadastrarGerente(Gerente gerente) {
-
-            }
-
-            @Override
-            public List<Gerente> listarGerente() {
-                return List.of();
-            }
-
-            @Override
-            public void atualizarGerente(Gerente gerente) {
-
-            }
-
-            @Override
-            public void excluirGerente(Gerente gerente) {
-
-            }
-
-            @Override
-            public void cadastrarProfessor(Professor professor) {
-
-            }
-
-            @Override
-            public List<Professor> listarProfessor() {
-                return List.of();
-            }
-
-            @Override
-            public Optional<Professor> buscarCpfprofesor(String cpf) {
-                return Optional.empty();
-            }
-
-            @Override
-            public void atualizarProfessor(Professor professor) {
-
-            }
-
-            @Override
-            public void excluirProfessor(Professor professor) {
-
-            }
-
-            @Override
-            public void cadastrarRecepcionista(Recepcionista recepcionista) {
-
-            }
-
-            @Override
-            public List<Recepcionista> listarRecepcionista() {
-                return List.of();
-            }
-
-            @Override
-            public void atualizarRecepcionista(Recepcionista recepcionista) {
-
-            }
-
-            @Override
-            public void excluirRecepcionista(Recepcionista recepcionista) {
-
-            }
-
-            @Override
-            public void cadastrarUsuario(Staff staff) {
-
-            }
-
-            @Override
-            public void atualizarUsuario(Staff staff) {
-
-            }
-
-            @Override
-            public Optional<Staff> buscarLogin(String loginAcesso) {
-                return Optional.empty();
-            }
-
-            @Override
-            public Optional<Staff> buscarSenha(String senhaAcesso) {
-                return Optional.empty();
-            }
-
-            @Override
-            public Optional<Staff> buscarCpfStaff(String cpf) {
-                return Optional.empty();
-            }
-
-            @Override
-            public void alterarLogin(String loginAcesso) {
-
-            }
-
-            @Override
-            public void alterarSenha(String senhaAcesso) {
-
-            }
-
-            @Override
-            public void removerUsuario(String loginAcesso, String senhaAcesso) {
-            }
-        };
+        PessoaRepository pessoaRepository = new PessoaRepository_(session);
         LoginRepository loginRepository = new LoginRepository() {
             @Override
             public void cadastrarUsuario(Staff staff) {
@@ -192,12 +71,12 @@ public class Testera {
             }
 
             @Override
-            public void alterarLogin(String loginAcesso) {
+            public void alterarLogin(String loginAcesso, String cpf) {
 
             }
 
             @Override
-            public void alterarSenha(String senhaAcesso) {
+            public void alterarSenha(String senhaAcesso, String cpf) {
 
             }
 
@@ -209,11 +88,11 @@ public class Testera {
 
         //Serviços
         PessoaService pessoaService = new PessoaService(pessoaRepository);
-        GerenteService gerenteService = new GerenteService(pessoaRepository);
-        ProfessorService professorService = new ProfessorService(pessoaRepository);
-        RecepcionistaService recepcionistaService = new RecepcionistaService(pessoaRepository);
-        AlunoService alunoService = new AlunoService(pessoaRepository);
         StaffService staffService = new StaffService(loginRepository);
+//        GerenteService gerenteService = new GerenteService(pessoaRepository);
+//        ProfessorService professorService = new ProfessorService(pessoaRepository);
+//        RecepcionistaService recepcionistaService = new RecepcionistaService(pessoaRepository);
+//        AlunoService alunoService = new AlunoService(pessoaRepository);
 
         DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -238,7 +117,6 @@ public class Testera {
             if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
                 cadastroStaff = false;
             }
-
         }
 
         while (ativo) {

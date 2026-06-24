@@ -3,11 +3,8 @@ package gymproject.service;
 import gymproject.exceptions.PessoaException;
 import gymproject.models.*;
 import gymproject.repository.LoginRepository;
-import gymproject.repository.PessoaRepository;
-import gymproject.repository.StaffRepository;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 

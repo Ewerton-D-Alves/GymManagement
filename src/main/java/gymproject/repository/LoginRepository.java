@@ -22,15 +22,15 @@ public interface LoginRepository {
     @Find
     Optional<Staff> buscarCpfStaff(String cpf);
 
-    @Find
+    @Query("SELECT s FROM Staff s WHERE s.loginAcesso = :loginAcesso AND s.senhaAcesso = :senhaAcesso")
     Optional<Staff> buscarUsuario(String loginAcesso, String senhaAcesso);
 
-    @Update
-    void alterarLogin(String loginAcesso);
+    @Query("UPDATE Staff s SET s.loginAcesso = :loginAcesso WHERE s.cpf = :cpf")
+    void alterarLogin(String loginAcesso, String cpf);
 
-    @Update
-    void alterarSenha(String senhaAcesso);
+    @Query("UPDATE Staff s SET s.senhaAcesso = :senhaAcesso WHERE s.cpf = :cpf")
+    void alterarSenha(String senhaAcesso, String cpf);
 
-    @Delete
-    void removerUsuario(String loginAcesso, String senhaAcesso);
+    @Query("DELETE FROM Staff s WHERE s.loginAcesso = :loginAcesso AND s.senhaAcesso = :senhaAcesso")
+    void removerUsuario(String loginAcesso,String senhaAcesso);
 }

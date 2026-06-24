@@ -15,8 +15,8 @@ public class Teste {
             Gerente gerente = new Gerente();
 
             gerente.setCpf("12345678901");
-            gerente.setPrimeiroNome("Admin");
-            gerente.setSobrenome("Admin");
+            gerente.setPrimeiroNome("gerente");
+            gerente.setSobrenome("gerente");
             gerente.setTelefone("912345678");
             gerente.setDataNascimento(LocalDate.of(1998, 1, 8));
             gerente.setNomeEmerg("Maria Silva");

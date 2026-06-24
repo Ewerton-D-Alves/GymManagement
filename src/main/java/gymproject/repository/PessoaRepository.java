@@ -99,13 +99,13 @@ public interface PessoaRepository {
     @Find
     Optional<Staff> buscarCpfStaff(String cpf);
 
-    @Update
-    void alterarLogin(String loginAcesso);
+    @Query("UPDATE Staff s SET s.loginAcesso = :loginAcesso WHERE s.cpf = :cpf")
+    void alterarLogin(String loginAcesso, String cpf);
 
-    @Update
-    void alterarSenha(String senhaAcesso);
+    @Query("UPDATE Staff s SET s.senhaAcesso = :senhaAcesso WHERE s.cpf = :cpf")
+    void alterarSenha(String senhaAcesso, String cpf);
 
-    @Delete
+    @Query("DELETE FROM Staff s WHERE s.loginAcesso = :loginAcesso AND s.senhaAcesso = :senhaAcesso")
     void removerUsuario(String loginAcesso,String senhaAcesso);
     //Fim das opções de staff
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
