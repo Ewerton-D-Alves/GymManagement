@@ -1,8 +1,8 @@
 
-import gymproject.service.AlunoService;
 import gymproject.service.UtilitarioService;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Main {
@@ -78,9 +78,135 @@ public class Main {
                         autenticadoAdm = false;
                     }
                     switch (tipoMenu) {
+                        //Aluno cadastro
                         case 1:
                             cadAluno = true;
-                            menuCentral = false;
+                            while (cadAluno) {
+                                String cpf = null;
+                                String pNome = null;
+                                String mNome = null;
+                                String sNome = null;
+                                String telefone = null;
+                                LocalDate dataNascimento = null;
+                                String nomeEmerg = null;
+                                String telefoneEmerg = null;
+                                System.out.println("========== Cadastrar Aluno ===========\n");
+                                int etapa = 1;
+                                while (etapa == 1) {
+                                    System.out.println("Digite o CPF do Aluno");
+                                    input = s.nextLine().trim();
+                                    // Nesse momento, o metodo deve receber esse dado e retornar se passou ou não
+                                    if (input.equalsIgnoreCase("x")) {
+                                        System.out.println("======== Cancelado ========");
+                                        cadAluno = false;
+                                        etapa = 0;
+                                    } else {
+                                        switch (ut.cpfValido(input)) {
+                                            case 1 -> System.out.println("Campo Vazio, tente novamente");
+                                            case 2 -> System.out.println("Escreva somente até 11 caracteres");
+                                            case 3 -> {
+                                                cpf = input;
+                                                System.out.println("====== Ok =======" + cpf);
+                                                etapa = 2;
+                                            }
+                                            case 4 -> System.out.println("Digite somente números");
+                                            default -> System.out.println("não");
+
+                                        }
+                                    }
+                                }
+                                while (etapa == 2) {
+                                    System.out.println("Digite o Nome do Aluno");
+                                    input = s.nextLine().trim();
+                                    // Nesse momento, o metodo deve receber esse dado e retornar se passou ou não
+                                    if (input.equalsIgnoreCase("x")) {
+                                        System.out.println("======== Cancelado ========");
+                                        cadAluno = false;
+                                        etapa = 0;
+
+                                    } else {
+                                        if (input.chars().allMatch(Character::isLetter)) {
+                                            pNome = input;
+                                            System.out.println("====== Ok =======" + pNome);
+                                            etapa = 3;
+                                        }
+                                    }
+                                }
+                                while (etapa == 3) {
+                                    System.out.println("Digite o Telefone do Aluno");
+                                    input = s.nextLine().trim();
+                                    // Nesse momento, o metodo deve receber esse dado e retornar se passou ou não
+                                    if (input.equalsIgnoreCase("x")) {
+                                        System.out.println("======== Cancelado ========");
+                                        cadAluno = false;
+                                        etapa = 0;
+                                    } else {
+                                        if (input.chars().allMatch(Character::isDigit)) {
+                                            telefone = input;
+                                            System.out.println("====== Ok =======" + telefone);
+                                            etapa = 4;
+                                        }
+                                    }
+                                }
+                                while (etapa == 4) {
+                                    System.out.println("Digite a Data de Nascimento do Aluno - Espaços entre dia mes ano");
+                                    input = s.nextLine();
+                                    // Nesse momento, o metodo deve receber esse dado e retornar se passou ou não
+                                    if (input.equalsIgnoreCase("x")) {
+                                        System.out.println("======== Cancelado ========");
+                                        cadAluno = false;
+                                        etapa = 0;
+                                    } else {
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+                                        LocalDate dNasc = LocalDate.parse(input, formatter);
+                                        dataNascimento = dNasc;
+                                        System.out.println("====== Ok =======" + dNasc);
+                                        etapa = 5;
+                                    }
+                                }
+                                while (etapa == 5) {
+                                    System.out.println("Digite o Nome do Contato de emergência do Aluno");
+                                    input = s.nextLine();
+                                    if (input.equalsIgnoreCase("x")) {
+                                        System.out.println("======== Cancelado ========");
+                                        cadAluno = false;
+                                        etapa = 0;
+
+                                    } else {
+                                        if (input.chars().allMatch(Character::isLetter)) {
+                                            nomeEmerg = input;
+                                            System.out.println("====== Ok =======" + nomeEmerg);
+                                            etapa = 6;
+                                        }
+                                    }
+                                }
+                                while (etapa == 6) {
+                                    System.out.println("Digite o Telefone do Aluno");
+                                    input = s.nextLine().trim();
+                                    // Nesse momento, o metodo deve receber esse dado e retornar se passou ou não
+                                    if (input.equalsIgnoreCase("x")) {
+                                        System.out.println("======== Cancelado ========");
+                                        cadAluno = false;
+                                        etapa = 0;
+                                    } else {
+                                        if (input.chars().allMatch(Character::isDigit)) {
+                                            telefoneEmerg = input;
+                                            System.out.println("====== Ok =======" + telefoneEmerg);
+                                            etapa = 7;
+                                        }
+                                    }
+                                }
+                                // Teste besta
+//                                while(etapa == 7){
+//                                    UUID uuid = UUID.randomUUID();
+//                                    Aluno aluno = new Aluno(pNome, mNome, sNome, cpf, telefone,
+//                                            dataNascimento, nomeEmerg, telefoneEmerg, uuid);
+//                                    System.out.println(aluno);
+//                                    System.out.println("Cadastrado com sucesso");
+//                                }
+//
+//                            }
+                            }
                         case 2:
                             verAluno = true;
                             menuCentral = false;
@@ -108,83 +234,12 @@ public class Main {
                         case 10:
                             verSect = true;
                             menuCentral = false;
-                    }
-
-                }
-                while (cadAluno) {
-                    String cpf = null; String pNome = null; String mNome = null;
-                    String sNome = null; String telefone = null; LocalDate dataNascimento = null;
-                    String nomeEmerg = null; String telefoneEmerg = null;
-
-                    String input = null;
-                    System.out.println("========== Cadastrar Aluno ===========\n");
-                    boolean cadCpf = true;
-                    while (cadCpf) {
-                        System.out.println("Digite o CPF do Aluno");
-                        input = s.nextLine().trim();
-                        // Nesse momento, o metodo deve receber esse dado e retornar se passou ou não
-                        if (input.equalsIgnoreCase("x")) {
-                            System.out.println("======== Cancelado ========");
-                            cadAluno = false;
-                            cadCpf = false;
+                        default:
                             menuCentral = true;
-                        } else {
-                            switch (ut.cpfValido(input)){
-                                case 1 ->
-                                    System.out.println("Campo Vazio, tente novamente");
-                                case 2 ->
-                                    System.out.println("Escreva somente até 11 caracteres");
-                                case 3 -> {
-                                    cpf = input;
-                                    System.out.println("====== Ok =======" + cpf);
-                                    cadCpf = false;
-                                }
-                                case 4 ->
-                                    System.out.println("Digite somente números");
-                                default ->
-                                    System.out.println("não");
-
-                            }
-                        }
-                        boolean cadNome = true;
-                        while (cadNome) {
-                            System.out.println("Digite o Nome do Aluno");
-                            input = s.nextLine().trim();
-                            // Nesse momento, o metodo deve receber esse dado e retornar se passou ou não
-                            if (input.equalsIgnoreCase("x")) {
-                                System.out.println("======== Cancelado ========");
-                                cadAluno = false;
-                                cadNome = false;
-                                menuCentral = true;
-                            } else {
-                                switch (ut.cpfValido(input)) {
-                                    case 1 -> System.out.println("Campo Vazio, tente novamente");
-                                    case 2 -> System.out.println("Escreva somente até 11 caracteres");
-                                    case 3 -> {
-                                        cpf = input;
-                                        System.out.println("====== Ok =======" + cpf);
-                                        cadCpf = false;
-                                    }
-                                }
-
-                                }
-                            }
-
-
-
-
-                        // remover variavel depois
-//                        boolean aluno = true;
-//                        switch (aluno) {
-//                            case true:
-//                                System.out.println("======= Digite o nome do Aluno =======");
-//                            case false:
-//                                System.out.println("Nome inválido, tente novamente");
-//                            default:
-//                                System.out.println("Algo deu errado, Tente novamente");
-//                        }
                     }
+
                 }
+
             }
         }
     }
