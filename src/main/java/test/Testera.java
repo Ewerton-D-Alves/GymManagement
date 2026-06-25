@@ -48,28 +48,7 @@ public class Testera {
 
         DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        while (cadastroPessoa) {
-            //cadastra pessoa, pode ser puxado para quaisquer menus.
-            pessoaService.cadastrarPessoa();
-            System.out.println("Deseja cadastrar outra pessoa?");
-            System.out.println("S - Sim\nX - Não");
-            String finalizar = sc.nextLine().trim();
-            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
-             cadastroPessoa = false;
-            }
-        }
 
-        while (cadastroStaff) {
-
-            //cadastra o usuário da Staff
-            pessoaService.cadastrarStaff();
-            System.out.println("Deseja cadastrar outro usuário?");
-            System.out.println("S - Sim\nX - Não");
-            String finalizar = sc.nextLine().trim();
-            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
-                cadastroStaff = false;
-            }
-        }
 
         while (ativo) {
             Staff usuarioExiste = null;
@@ -85,12 +64,12 @@ public class Testera {
                     usuarioExiste = staffService.verificarAcesso(login, senha);
                 } catch (PessoaException erro) {
                     System.out.println(erro.getMessage());
-                }
-                System.out.println("Deseja tentar novamente?");
-                System.out.println("S - Sim\nX - Não");
-                String finalizar = sc.nextLine().trim();
-                if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")) {
-                    break;
+                    System.out.println("Deseja tentar novamente?");
+                    System.out.println("S - Sim\nX - Não");
+                    String finalizar = sc.nextLine().trim();
+                    if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")) {
+                        break;
+                    }
                 }
 
                 if (usuarioExiste instanceof Gerente) {
@@ -114,13 +93,54 @@ public class Testera {
             // Admin reverterá para aqui até deslogar
             while (autenticadoAdm) {
                 System.out.println("======= Bem-vindo a academia entra forte e sai frango ====== \n" +
-                        "1 - Cadastrar Aluno \n" + "2 - Consultar aluno\n" + "3 - Consultar Aulas \n" +
-                        "4 - Criar Aula \n" + "5 - Cadastrar Professor \n" + "6 - Consultar Professor \n" +
-                        "7 - Cadastrar Treino \n" + "8 - Consultar Treino \n" +
-                        "9 - Cadastrar Secretário \n" + "10 - Consultar Secretário \n" +
-                        ">|< Para maior lucidez, não seja um usuário de atacadão >|< \n" +
+                        "1 - Cadastrar Integrante (Aluno ou Staff). \n" + "2 - Consultar Integrante \n" + "3 - Consultar Aulas \n" +
+                        "4 - Criar Aula \n" + "5 - Cadastrar Treino \n" + "6 - Consultar treino \n" +
+                        "7 - Cancelar Aula \n" + "8 - Inativar Integrante \n" +
+                        "9 - Cadastrar Acesso \n" +  ">|< Para maior lucidez, não seja um usuário de atacadão >|< \n" +
                         "Pressione 'x' para sair \n");
                 String input = sc.nextLine().trim();
+
+                switch (input) {
+                    case "1":
+                        while (cadastroPessoa) {
+                            //cadastra pessoa, pode ser puxado para quaisquer menus.
+                            pessoaService.cadastrarPessoa();
+                            System.out.println("Deseja cadastrar outra pessoa?");
+                            System.out.println("S - Sim\nX - Não");
+                            String finalizar = sc.nextLine().trim();
+                            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
+                                cadastroPessoa = false;
+                            }
+                            break;
+                        }
+                    case "2":
+                        //Consultar integrante
+                    case "3":
+                        //Consultar aulas
+                    case "4":
+                        //Criar aulas
+                    case "5":
+                        //Cadastrar treinos
+                    case "6":
+                        //Consultar treinos
+                    case "7":
+                        //Cancelar aula
+                    case "8":
+                        //Inativar integrante
+                    case "9":
+                        //Cadastrar acesso
+                        while (cadastroStaff) {
+
+                            //cadastra o usuário da Staff
+                            pessoaService.cadastrarStaff();
+                            System.out.println("Deseja cadastrar outro usuário?");
+                            System.out.println("S - Sim\nX - Não");
+                            String finalizar = sc.nextLine().trim();
+                            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
+                                cadastroStaff = false;
+                            }
+                        }
+                }
                 int tipoMenu = Integer.parseInt(input);
                 if (input.equalsIgnoreCase("x")) {
                     autenticadoAdm = false;
@@ -130,5 +150,28 @@ public class Testera {
             }
         }
 
+
+//        while (cadastroPessoa) {
+//            //cadastra pessoa, pode ser puxado para quaisquer menus.
+//            pessoaService.cadastrarPessoa();
+//            System.out.println("Deseja cadastrar outra pessoa?");
+//            System.out.println("S - Sim\nX - Não");
+//            String finalizar = sc.nextLine().trim();
+//            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
+//                cadastroPessoa = false;
+//            }
+//        }
+
+//        while (cadastroStaff) {
+//
+//            //cadastra o usuário da Staff
+//            pessoaService.cadastrarStaff();
+//            System.out.println("Deseja cadastrar outro usuário?");
+//            System.out.println("S - Sim\nX - Não");
+//            String finalizar = sc.nextLine().trim();
+//            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
+//                cadastroStaff = false;
+//            }
+//        }
     }
 }

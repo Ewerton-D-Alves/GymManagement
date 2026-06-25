@@ -25,29 +25,18 @@ public class StaffService {
     }
     //Metodo para cadastrar o acesso
 
-    public void cadastrarAcesso(String cpf, String loginAcesso, String senhaAcesso) {
+    public void cadastrarAcesso(String cpf, String login, String senha) {
 
         //Aqui verifica se o usuario com o cpf de entrada existe.
-
-        Optional<Staff> usuario = loginRepository.buscarCpfStaff(cpf);
-        if (usuario.isEmpty()) {
-            throw new PessoaException("Nenhum funcionário cadastrado com esse CPF: " + cpf);
+        if (login == null || login.isBlank() || senha == null || senha.isBlank()) {
+            throw new PessoaException("O login e senha são obrigatórios.");
         }
-        if (loginAcesso == null || loginAcesso.isBlank()) {
-            throw new PessoaException("O login é obrigatório.");
-        }
-        if (senhaAcesso == null || senhaAcesso.isBlank()) {
-            throw new PessoaException("A senha é obrigatória.");
-
-        }   //verifica se o login ja existe para outro usuário;
-        verificarLogin(loginAcesso);
-        //Retira a pessoa do "Optional" para podermos manipular
-        //E adicionando o login e a senha nova ao "existeSim" e mandando para o repositório.
-
-        Staff existeSim = usuario.get();
-        existeSim.setLoginAcesso(loginAcesso);
-        existeSim.setSenhaAcesso(senhaAcesso);
-        loginRepository.atualizarUsuario(existeSim);
+        Staff usuario = loginRepository.buscarCpfStaff(cpf)
+                .orElseThrow(() -> new PessoaException("Nenhum funcionário cadastrado com esse CPF: " + cpf));
+                verificarLogin(login);
+                usuario.setLoginAcesso(login);
+                usuario.setSenhaAcesso(senha);
+                loginRepository.atualizarUsuario(usuario);
     }
     //Metodo para verificar se o login ja existe.
 

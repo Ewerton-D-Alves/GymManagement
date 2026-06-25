@@ -85,34 +85,51 @@ public class PessoaService {
             throw new PessoaException("Já existe uma pessoa cadastrada com esse CPF.");
         }
     }
+    public void verificarPessoaExiste(String cpf) throws PessoaException {
+        verificarCpfPessoa(cpf);
+        Optional<Pessoa> pessoaPresente = pessoaRepository.buscarCpf(cpf);
+        if (pessoaPresente.isEmpty()) {
+            throw new PessoaException("Não existe uma pessoa cadastrada com esse CPF.");
+        }
+    }
     public void cadastrarAluno(Aluno aluno) throws PessoaException {
         verificarPessoa(aluno.getCpf());
         try {
             pessoaRepository.cadastrarAluno(aluno);
             System.out.println("Aluno cadastrado com sucesso.");
-        } catch (PessoaException erro) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
     public void cadastrarGerente(Gerente gerente) throws PessoaException {
         verificarPessoa(gerente.getCpf());
-        pessoaRepository.cadastrarGerente(gerente);
-        System.out.println("Gerente cadastrado com sucesso");
+        try {
+            pessoaRepository.cadastrarGerente(gerente);
+            System.out.println("Gerente cadastrado com sucesso");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void cadastrarProfessor(Professor professor) throws  PessoaException {
         verificarPessoa(professor.getCpf());
-        pessoaRepository.cadastrarProfessor(professor);
-        System.out.println("Professor cadastrado com sucesso");
+        try {
+            pessoaRepository.cadastrarProfessor(professor);
+            System.out.println("Professor cadastrado com sucesso");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void cadastrarRecepcionista(Recepcionista recepcionista) throws PessoaException {
         verificarPessoa(recepcionista.getCpf());
-        pessoaRepository.cadastrarRecepcionista(recepcionista);
-        System.out.println("Recepcionista cadastrado com sucesso");
+        try {
+            pessoaRepository.cadastrarRecepcionista(recepcionista);
+            System.out.println("Recepcionista cadastrado com sucesso");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
     private void verificarCpfPessoa(String cpf) throws PessoaException {
         if (cpf == null || cpf.isBlank()) {
@@ -167,17 +184,35 @@ public class PessoaService {
             String senhaGerente = sc.nextLine();
             Staff gerenteExiste = staffService.verificarAcesso(loginGerente, senhaGerente);
             if (gerenteExiste instanceof Gerente) {
-                 cadastrarGerente((Gerente) gerenteExiste);
+                 cadastrarGerente(gerente);
               //staffService.cadastrarUsuario(gerenteExiste);
             }
         }
+    }
+
+    public void cadastrarAcesso(String cpf, String login, String senha) {
+
+        //Aqui verifica se o usuario com o cpf de entrada existe.
+        if (login == null || login.isBlank() || senha == null || senha.isBlank()) {
+            throw new PessoaException("O login e senha são obrigatórios.");
+        }
+        Staff usuario = pessoaRepository.buscarCpfStaff(cpf)
+                .orElseThrow(() -> new PessoaException("Nenhum funcionário cadastrado com esse CPF: " + cpf));
+
+        Optional<Staff> loginCadastrado = loginRepository.buscarLogin(login);
+        if (loginCadastrado.isPresent()) {
+            throw new PessoaException("Já existe um usuário com o mesmo login cadastrado.");
+        }
+        usuario.setSenhaAcesso(login);
+        usuario.setSenhaAcesso(senha);
+        loginRepository.atualizarUsuario(usuario);
     }
 
     public void cadastrarStaff () throws PessoaException{
         System.out.println("><>< Bem-vindo ao cadastro de usuário ><><");
         System.out.print("Digite seu CPF: ");
         String cpf = sc.nextLine();
-        verificarPessoa(cpf);
+        verificarPessoaExiste(cpf);
         System.out.print("Digite seu nome: ");
         String nomeInutil = sc.nextLine();
 //            System.out.print("Digite seu CPF :");
@@ -187,12 +222,12 @@ public class PessoaService {
         System.out.print("Digite a senha: ");
         String senha = sc.nextLine();
         try {
-            staffService.cadastrarAcesso(cpf, login, senha);
+            cadastrarAcesso(cpf, login, senha);
         } catch (PessoaException erro) {
             System.out.println(erro.getMessage());
         }
-    }
 
+    }
 }
 
 //        ⠄⠄⠄⣠⢴⢴⡴⣤⢤⣄⠄⠄⢀⠄⣀⡤⣴⣺⡽⣯⡷⣦⣄⠄⠄⠄
