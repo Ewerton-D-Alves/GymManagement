@@ -60,21 +60,19 @@ public class StaffService {
 
     public Staff verificarAcesso(String loginAcesso, String senhaAcesso) throws PessoaException {
 
-        if (loginAcesso == null || loginAcesso.isBlank()) {
-            throw new PessoaException("O login é obrigatório.");
-        }
-        if (senhaAcesso == null || senhaAcesso.isBlank()) {
-            throw new PessoaException("A senha é obrigatória.");
+        if (loginAcesso == null || loginAcesso.isBlank() || senhaAcesso == null || senhaAcesso.isBlank()) {
+            throw new PessoaException("O login e senha são obrigatórios.");
         }
         Optional<Staff> usuario = loginRepository.buscarUsuario(loginAcesso, senhaAcesso);
-        if (usuario.isEmpty()) {
+
+        if (usuario == null || usuario.isEmpty() || usuario.get() == null) {
             throw new PessoaException("Login ou senha estão incorretos, ou funcionário não cadastrado.");
         }
-        System.out.println("Seja bem vindo, " + loginAcesso);
         Staff usuarioExiste = usuario.get();
-        return usuarioExiste;
-    }
+        System.out.println("Seja bem vindo, " + usuarioExiste.getPrimeiroNome());
+            return usuarioExiste;
 
+    }
 }
 
 

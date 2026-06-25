@@ -2,10 +2,7 @@ package test;
 
 import gymproject.exceptions.PessoaException;
 import gymproject.models.*;
-import gymproject.repository.ConnectJPA;
-import gymproject.repository.LoginRepository;
-import gymproject.repository.PessoaRepository;
-import gymproject.repository.PessoaRepository_;
+import gymproject.repository.*;
 import gymproject.service.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -39,52 +36,7 @@ public class Testera {
         //Repositórios
 
         PessoaRepository pessoaRepository = new PessoaRepository_(session);
-        LoginRepository loginRepository = new LoginRepository() {
-            @Override
-            public void cadastrarUsuario(Staff staff) {
-
-            }
-
-            @Override
-            public void atualizarUsuario(Staff staff) {
-
-            }
-
-            @Override
-            public Optional<Staff> buscarLogin(String loginAcesso) {
-                return Optional.empty();
-            }
-
-            @Override
-            public Optional<Staff> buscarSenha(String senhaAcesso) {
-                return Optional.empty();
-            }
-
-            @Override
-            public Optional<Staff> buscarCpfStaff(String cpf) {
-                return Optional.empty();
-            }
-
-            @Override
-            public Optional<Staff> buscarUsuario(String loginAcesso, String senhaAcesso) {
-                return Optional.empty();
-            }
-
-            @Override
-            public void alterarLogin(String loginAcesso, String cpf) {
-
-            }
-
-            @Override
-            public void alterarSenha(String senhaAcesso, String cpf) {
-
-            }
-
-            @Override
-            public void removerUsuario(String loginAcesso, String senhaAcesso) {
-
-            }
-        };
+        LoginRepository loginRepository = new LoginRepository_(session);
 
         //Serviços
         PessoaService pessoaService = new PessoaService(pessoaRepository);
