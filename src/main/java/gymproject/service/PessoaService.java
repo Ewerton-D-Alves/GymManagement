@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.RollbackException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
@@ -182,10 +183,14 @@ public class PessoaService {
             String loginGerente = sc.nextLine();
             System.out.print("Digite sua Senha: ");
             String senhaGerente = sc.nextLine();
-            Staff gerenteExiste = staffService.verificarAcesso(loginGerente, senhaGerente);
-            if (gerenteExiste instanceof Gerente) {
-                 cadastrarGerente(gerente);
-              //staffService.cadastrarUsuario(gerenteExiste);
+            try {
+                Staff gerenteExiste = staffService.verificarAcesso(loginGerente, senhaGerente);
+                if (gerenteExiste instanceof Gerente) {
+                    cadastrarGerente(gerente);
+                }
+            } catch (PessoaException erro) {
+                System.out.println(erro.getMessage());
+                System.out.println("Deseja tentar novamente?");
             }
         }
     }
@@ -199,13 +204,16 @@ public class PessoaService {
         Staff usuario = pessoaRepository.buscarCpfStaff(cpf)
                 .orElseThrow(() -> new PessoaException("Nenhum funcionário cadastrado com esse CPF: " + cpf));
 
-        Optional<Staff> loginCadastrado = loginRepository.buscarLogin(login);
+        Optional<Staff> loginCadastrado = pessoaRepository.buscarLogin(login);
         if (loginCadastrado.isPresent()) {
             throw new PessoaException("Já existe um usuário com o mesmo login cadastrado.");
         }
-        usuario.setSenhaAcesso(login);
+        //pessoaRepository.alterarLoginESenha(login, senha, cpf);
+        usuario.setLoginAcesso(login);
         usuario.setSenhaAcesso(senha);
-        loginRepository.atualizarUsuario(usuario);
+        pessoaRepository.atualizarUsuario(usuario);
+        pessoaRepository.buscarCpfStaff(cpf);
+        System.out.println("Cadastrado.");
     }
 
     public void cadastrarStaff () throws PessoaException{

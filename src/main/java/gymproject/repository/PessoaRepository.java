@@ -2,6 +2,8 @@ package gymproject.repository;
 
 import gymproject.models.*;
 import jakarta.data.repository.*;
+import jakarta.transaction.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -99,11 +101,19 @@ public interface PessoaRepository {
     @Find
     Optional<Staff> buscarCpfStaff(String cpf);
 
+    @Transactional
+    @Update
+    @Query("UPDATE Staff s SET s.loginAcesso = :login, s.senhaAcesso = :senha WHERE s.cpf = :cpf")
+    void alterarLoginESenha(String login, String senha, String cpf);
+
+    //@Update
     @Query("UPDATE Staff s SET s.loginAcesso = :loginAcesso WHERE s.cpf = :cpf")
     void alterarLogin(String loginAcesso, String cpf);
 
+    //@Update
     @Query("UPDATE Staff s SET s.senhaAcesso = :senhaAcesso WHERE s.cpf = :cpf")
     void alterarSenha(String senhaAcesso, String cpf);
+
 
     @Query("DELETE FROM Staff s WHERE s.loginAcesso = :loginAcesso AND s.senhaAcesso = :senhaAcesso")
     void removerUsuario(String loginAcesso,String senhaAcesso);

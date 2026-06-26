@@ -55,10 +55,10 @@ public class Testera {
             int menuTipo = 0;
             int tipo = 0;
             while (!autenticadoAdm || !autenticadoProf || !autenticadoSect) {
-                System.out.println("======= Bem-vindo a academia entra forte e sai frango ====== \n" +
-                        "Digite seu Login:");
+                System.out.println("======= Bem-vindo a academia entra forte e sai frango ======");
+                System.out.print("Digite seu Login: ");
                 String login = sc.nextLine();
-                System.out.println("Digite sua Senha;");
+                System.out.print("Digite sua Senha: ");
                 String senha = sc.nextLine();
                 try {
                     usuarioExiste = staffService.verificarAcesso(login, senha);
@@ -97,22 +97,27 @@ public class Testera {
                         "4 - Criar Aula \n" + "5 - Cadastrar Treino \n" + "6 - Consultar treino \n" +
                         "7 - Cancelar Aula \n" + "8 - Inativar Integrante \n" +
                         "9 - Cadastrar Acesso \n" +  ">|< Para maior lucidez, não seja um usuário de atacadão >|< \n" +
-                        "Pressione 'x' para sair \n");
+                        "Pressione 'x' para sair.");
                 String input = sc.nextLine().trim();
 
                 switch (input) {
                     case "1":
                         while (cadastroPessoa) {
                             //cadastra pessoa, pode ser puxado para quaisquer menus.
-                            pessoaService.cadastrarPessoa();
+                            try {
+                                pessoaService.cadastrarPessoa();
+                            } catch (PessoaException e) {
+                                System.out.println("Já existe pessoa cadastrada com esse CPF, tente novamente.");
+                                continue;
+                            }
                             System.out.println("Deseja cadastrar outra pessoa?");
                             System.out.println("S - Sim\nX - Não");
                             String finalizar = sc.nextLine().trim();
                             if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
                                 cadastroPessoa = false;
                             }
-                            break;
                         }
+                        break;
                     case "2":
                         //Consultar integrante
                     case "3":
@@ -140,6 +145,7 @@ public class Testera {
                                 cadastroStaff = false;
                             }
                         }
+                        break;
                 }
                 int tipoMenu = Integer.parseInt(input);
                 if (input.equalsIgnoreCase("x")) {
@@ -149,29 +155,5 @@ public class Testera {
                 }
             }
         }
-
-
-//        while (cadastroPessoa) {
-//            //cadastra pessoa, pode ser puxado para quaisquer menus.
-//            pessoaService.cadastrarPessoa();
-//            System.out.println("Deseja cadastrar outra pessoa?");
-//            System.out.println("S - Sim\nX - Não");
-//            String finalizar = sc.nextLine().trim();
-//            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
-//                cadastroPessoa = false;
-//            }
-//        }
-
-//        while (cadastroStaff) {
-//
-//            //cadastra o usuário da Staff
-//            pessoaService.cadastrarStaff();
-//            System.out.println("Deseja cadastrar outro usuário?");
-//            System.out.println("S - Sim\nX - Não");
-//            String finalizar = sc.nextLine().trim();
-//            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
-//                cadastroStaff = false;
-//            }
-//        }
     }
 }
