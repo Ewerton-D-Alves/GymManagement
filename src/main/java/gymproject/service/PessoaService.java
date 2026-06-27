@@ -216,7 +216,7 @@ public class PessoaService {
         System.out.println("Cadastrado.");
     }
 
-    public void cadastrarStaff () throws PessoaException{
+    public void cadastrarStaff () throws PessoaException {
         System.out.println("><>< Bem-vindo ao cadastro de usuário ><><");
         System.out.print("Digite seu CPF: ");
         String cpf = sc.nextLine();
@@ -236,6 +236,25 @@ public class PessoaService {
         }
 
     }
+
+    public void procurarPessoa(String cpf) throws PessoaException {
+
+        Pessoa pessoa = pessoaRepository.buscarCpfStaff(cpf)
+                .orElseThrow(() -> new PessoaException("Nenhum funcionário cadastrado com esse CPF: " + cpf));
+
+        System.out.println(pessoa);
+    }
+
+    public void deletarPessoa(String cpf) throws PessoaException {
+
+        Pessoa pessoa = pessoaRepository.buscarCpfStaff(cpf)
+                .orElseThrow(() -> new PessoaException("Nenhum funcionário cadastrado com esse CPF: " + cpf));
+
+        pessoaRepository.deletarPessoa(cpf);
+    }
+
+
+
 }
 
 //        ⠄⠄⠄⣠⢴⢴⡴⣤⢤⣄⠄⠄⢀⠄⣀⡤⣴⣺⡽⣯⡷⣦⣄⠄⠄⠄

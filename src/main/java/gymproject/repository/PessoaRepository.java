@@ -8,13 +8,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PessoaRepository {
-
+public interface PessoaRepository extends jakarta.data.repository.DataRepository<Pessoa, String> {
 
     //Para buscar todas as pessoas \/
 
     @Find
     Optional<Pessoa> buscarCpf(String cpf);
+
+    @Delete
+    void deletarPessoa(String cpf);
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Aluno @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //Inicio das opções de aluno;
