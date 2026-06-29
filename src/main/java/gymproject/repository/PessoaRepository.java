@@ -2,17 +2,21 @@ package gymproject.repository;
 
 import gymproject.models.*;
 import jakarta.data.repository.*;
+import jakarta.transaction.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PessoaRepository {
-
+public interface PessoaRepository extends jakarta.data.repository.DataRepository<Pessoa, String> {
 
     //Para buscar todas as pessoas \/
 
     @Find
     Optional<Pessoa> buscarCpf(String cpf);
+
+    @Delete
+    void deletarPessoa(String cpf);
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Aluno @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //Inicio das opções de aluno;
@@ -99,13 +103,21 @@ public interface PessoaRepository {
     @Find
     Optional<Staff> buscarCpfStaff(String cpf);
 
+    @Transactional
     @Update
-    void alterarLogin(String loginAcesso);
+    @Query("UPDATE Staff s SET s.loginAcesso = :login, s.senhaAcesso = :senha WHERE s.cpf = :cpf")
+    void alterarLoginESenha(String login, String senha, String cpf);
 
-    @Update
-    void alterarSenha(String senhaAcesso);
+    //@Update
+    @Query("UPDATE Staff s SET s.loginAcesso = :loginAcesso WHERE s.cpf = :cpf")
+    void alterarLogin(String loginAcesso, String cpf);
 
-    @Delete
+    //@Update
+    @Query("UPDATE Staff s SET s.senhaAcesso = :senhaAcesso WHERE s.cpf = :cpf")
+    void alterarSenha(String senhaAcesso, String cpf);
+
+
+    @Query("DELETE FROM Staff s WHERE s.loginAcesso = :loginAcesso AND s.senhaAcesso = :senhaAcesso")
     void removerUsuario(String loginAcesso,String senhaAcesso);
     //Fim das opções de staff
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

@@ -8,11 +8,20 @@
 
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+        <class>gymproject.models.Pessoa</class>
+        <class>gymproject.models.Aluno</class>
+        <class>gymproject.models.Gerente</class>
+        <class>gymproject.models.Professor</class>
+        <class>gymproject.models.Recepcionista</class>
+        <class>gymproject.models.Staff</class>
+        <class>gymproject.models.Treino</class>
+        <class>gymproject.models.Aula</class>
+
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver" />
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/seu_banco" />
-            <property name="jakarta.persistence.jdbc.user" value="seu_usuario" />
-            <property name="jakarta.persistence.jdbc.password" value="sua_senha" />
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/GymManagement" />
+            <property name="jakarta.persistence.jdbc.user" value="postgres" />
+            <property name="jakarta.persistence.jdbc.password" value="8840" />
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
             <property name="hibernate.show_sql" value="true" />

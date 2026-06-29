@@ -1,17 +1,18 @@
 package gymproject.service;
 
 import gymproject.exceptions.PessoaException;
-import gymproject.models.Staff;
+import gymproject.models.*;
 import gymproject.repository.LoginRepository;
-import gymproject.repository.PessoaRepository;
-import gymproject.repository.StaffRepository;
 import lombok.RequiredArgsConstructor;
+
 import java.util.Optional;
+import java.util.Scanner;
 
 @RequiredArgsConstructor
 public class StaffService {
     private final LoginRepository loginRepository;
 
+    Scanner sc = new Scanner(System.in);
 
     //Metodo para cadastrar o usuario
     public void cadastrarUsuario(Staff staffNovo) throws PessoaException {
@@ -24,29 +25,18 @@ public class StaffService {
     }
     //Metodo para cadastrar o acesso
 
-    public void cadastrarAcesso(String cpf, String loginAcesso, String senhaAcesso) {
+    public void cadastrarAcesso(String cpf, String login, String senha) {
 
         //Aqui verifica se o usuario com o cpf de entrada existe.
-
-        Optional<Staff> usuario = loginRepository.buscarCpfStaff(cpf);
-        if (usuario.isEmpty()) {
-            throw new PessoaException("Nenhum funcionário cadastrado com esse CPF: " + cpf);
+        if (login == null || login.isBlank() || senha == null || senha.isBlank()) {
+            throw new PessoaException("O login e senha são obrigatórios.");
         }
-        if (loginAcesso == null || loginAcesso.isBlank()) {
-            throw new PessoaException("O login é obrigatório.");
-        }
-        if (senhaAcesso == null || senhaAcesso.isBlank()) {
-            throw new PessoaException("A senha é obrigatória.");
-
-        }   //verifica se o login ja existe para outro usuário;
-        verificarLogin(loginAcesso);
-        //Retira a pessoa do "Optional" para podermos manipular
-        //E adicionando o login e a senha nova ao "existeSim" e mandando para o repositório.
-
-        Staff existeSim = usuario.get();
-        existeSim.setLoginAcesso(loginAcesso);
-        existeSim.setSenhaAcesso(senhaAcesso);
-        loginRepository.atualizarUsuario(existeSim);
+        Staff usuario = loginRepository.buscarCpfStaff(cpf)
+                .orElseThrow(() -> new PessoaException("Nenhum funcionário cadastrado com esse CPF: " + cpf));
+                verificarLogin(login);
+                usuario.setLoginAcesso(login);
+                usuario.setSenhaAcesso(senha);
+                loginRepository.atualizarUsuario(usuario);
     }
     //Metodo para verificar se o login ja existe.
 
@@ -57,25 +47,20 @@ public class StaffService {
         }
     }
 
-    public void verificarAcesso(String loginAcesso, String senhaAcesso) throws PessoaException {
+    public Staff verificarAcesso(String loginAcesso, String senhaAcesso) throws PessoaException {
 
+        if (loginAcesso == null || loginAcesso.isBlank() || senhaAcesso == null || senhaAcesso.isBlank()) {
+            throw new PessoaException("O login e senha são obrigatórios.");
+        }
         Optional<Staff> usuario = loginRepository.buscarUsuario(loginAcesso, senhaAcesso);
-        if (usuario.isEmpty()) {
-            throw new PessoaException("Nenhum funcionário cadastrado.");
-        } if (loginAcesso == null || loginAcesso.isBlank()) {
-            throw new PessoaException("O login é obrigatório.");
-        } if (senhaAcesso == null || senhaAcesso.isBlank()) {
-            throw new PessoaException("A senha é obrigatória.");
+
+        if (usuario == null || usuario.isEmpty() || usuario.get() == null) {
+            throw new PessoaException("Login ou senha estão incorretos, ou funcionário não cadastrado.");
         }
-        //Retira a pessoa do "Optional" para podermos manipular
-        //E adicionando o login e a senha nova ao "existeSim"
-        Staff cadastrado = usuario.get();
-        String loginUsuario = cadastrado.getLoginAcesso();
-        String senhaUsuario = cadastrado.getSenhaAcesso();
-        if (loginAcesso.equals(loginUsuario) || !senhaAcesso.equals(senhaUsuario))
-            if (!loginAcesso.equals(loginUsuario) || senhaAcesso.equals(senhaUsuario)) {
-            System.out.println("Login ou senha estão incorretos;");
-        }
+        Staff usuarioExiste = usuario.get();
+        System.out.println("Seja bem vindo, " + usuarioExiste.getPrimeiroNome());
+            return usuarioExiste;
+
     }
 }
 

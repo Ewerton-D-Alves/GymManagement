@@ -2,8 +2,7 @@ package gymproject.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +13,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-public class Staff extends Pessoa {
+@PrimaryKeyJoinColumn(name="cpf")
+public abstract class Staff extends Pessoa {
     //Atributos que serão de outra tabela;
     @Column(name = "login", nullable = true, length = 255)
     private String loginAcesso;

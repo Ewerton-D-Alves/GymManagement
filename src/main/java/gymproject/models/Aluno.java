@@ -11,17 +11,20 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter @Setter
 @Entity
+@PrimaryKeyJoinColumn(name="cpf")
 public class Aluno extends Pessoa {
 
  @Column(nullable = false)
- private UUID matricula;
+ private String matricula;
+
+
 
  @OneToOne
  @JoinColumn(name = "pessoa_id", nullable = false)
  private Pessoa pessoa;
 
  public Aluno (String primeiroNome, String sobrenome, String cpf, String telefone, LocalDate dataNascimento,
-         String nomeEmerg, String telefoneEmerg, UUID matricula) {
+         String nomeEmerg, String telefoneEmerg, String matricula) {
   super(primeiroNome,sobrenome, cpf, telefone, dataNascimento, nomeEmerg, telefoneEmerg);
 
   this.matricula = matricula;
