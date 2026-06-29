@@ -81,22 +81,36 @@ public class Testera {
                 }
 
                 if (usuarioExiste instanceof Gerente) {
-                    acesso = 1;
+                    //acesso = 1;
+                    autenticadoAdm = true;
+                    break;
                 }
                 if (usuarioExiste instanceof Professor) {
-                    acesso = 2;
+                    //acesso = 2;
+                    autenticadoProf = true;
+                    break;
                 }
                 if (usuarioExiste instanceof Recepcionista) {
-                    acesso = 3;
+                    //acesso = 3;
+                    autenticadoSect = true;
+                    break;
                 }
-                switch (acesso) {
-                    case 1:
-                        autenticadoAdm = true;
-                    case 2:
-                        autenticadoProf = true;
-                    case 3:
-                        autenticadoSect = true;
-                }
+
+//                if (acesso == 1) {
+//                    autenticadoAdm = true;
+//                } else if (acesso == 2) {
+//                    autenticadoProf = true;
+//                } else if (acesso == 3) {
+//                    autenticadoSect = true;
+//                }
+//                switch (acesso) {
+//                    case 1:
+//                        autenticadoAdm = true;
+//                    case 2:
+//                        autenticadoProf = true;
+//                    case 3:
+//                        autenticadoSect = true;
+//                }
             }
             // Admin reverterá para aqui até desconectar
             while (autenticadoAdm) {
@@ -323,16 +337,13 @@ public class Testera {
             while (autenticadoProf) {
                 System.out.println("""
                         ======= Bem-vindo a academia entra forte e sai frango ======\s
-                        1 - Cadastrar Integrante (Aluno ou Staff).\s
-                        2 - Consultar Integrante\s
-                        3 - Criar Aulas\s
-                        4 - Consultar Aula\s
-                        5 - Cadastrar Treino\s
-                        6 - Consultar treino\s
-                        7 - Cancelar Aula\s
-                        8 - Cancelar Treino\s
-                        9 - Inativar Integrante\s
-                        10 - Cadastrar Acesso\s
+                        1 - Consultar Integrante\s
+                        2 - Criar Aulas\s
+                        3 - Consultar Aula\s
+                        4 - Cadastrar Treino\s
+                        5 - Consultar treino\s
+                        6 - Cancelar Aula\s
+                        7 - Cancelar Treino\s
                         >|< Para maior lucidez, não seja um usuário de atacadão >|<\s
                         Pressione 'x' para sair.""");
                 String input = sc.nextLine().trim();
@@ -344,25 +355,8 @@ public class Testera {
                 }else{
                 tipoMenu = Integer.parseInt(input);}
                 switch (tipoMenu) {
+
                     case 1:
-                        cadPessoa = true;
-                        while (cadPessoa) {
-                            //cadastra pessoa, pode ser puxado para quaisquer menus.
-                            try {
-                                pessoaService.cadastrarPessoa();
-                            } catch (PessoaException e) {
-                                System.out.println("Já existe pessoa cadastrada com esse CPF, tente novamente.");
-                                continue;
-                            }
-                            System.out.println("Deseja cadastrar outra pessoa?");
-                            System.out.println("S - Sim\nX - Não");
-                            String finalizar = sc.nextLine().trim();
-                            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
-                                cadPessoa= false;
-                            }
-                        }
-                        break;
-                    case 2:
                         //Consultar integrante
                         verPessoa = true;
                         while (verPessoa){
@@ -383,7 +377,7 @@ public class Testera {
                         }
                         break;
 
-                    case 3:
+                    case 2:
                         //cadastrar aulas
                         cadAula = true;
                         while (cadAula){
@@ -401,7 +395,7 @@ public class Testera {
                             }
                         }
                         break;
-                    case 4:
+                    case 3:
                         //Consultar aulas
                         verAula = true;
                         while (verAula){
@@ -422,7 +416,7 @@ public class Testera {
                         }
                         break;
 
-                    case 5:
+                    case 4:
                         //Cadastrar treinos
                         cadTreino = true;
                         while (cadTreino) {
@@ -440,7 +434,7 @@ public class Testera {
                             }
                         }
                         break;
-                    case 6:
+                    case 5:
                         //Consultar treinos
                         verTreino = true;
                         while (verTreino){
@@ -460,7 +454,7 @@ public class Testera {
                             }
                         }
                         break;
-                    case 7:
+                    case 6:
                         //Cancelar aula
                         delAula = true;
                         while (delAula) {
@@ -481,7 +475,7 @@ public class Testera {
                         }
                         break;
 
-                    case 8:
+                    case 7:
                         //Cancelar treino
                         delTreino = true;
                         while (delTreino) {
@@ -501,42 +495,6 @@ public class Testera {
                             }
                         }
                         break;
-
-                    case 9:
-                        //Inativar integrante
-                        delPessoa = true;
-                        while (delPessoa) {
-                            System.out.print("Digite o CPF: ");
-                            String cpfExiste = sc.nextLine();
-                            try {
-                                pessoaService.deletarPessoa(cpfExiste);
-                            } catch (PessoaException e) {
-                                System.out.println("Não foi ponsível continuar com essa ação.");
-                                continue;
-                            }
-                            System.out.println("Deseja tentar novamente?");
-                            System.out.println("S - Sim\nX - Não");
-                            String finalizar = sc.nextLine().trim();
-                            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")) {
-                                delPessoa = false;
-                            }
-                        }
-                        break;
-
-                    case 10:
-                        //Cadastrar acesso
-                        cadAcesso = true;
-                        while (cadAcesso) {
-
-                            //cadastra o usuário da Staff
-                            pessoaService.cadastrarStaff();
-                            System.out.println("Deseja cadastrar outro usuário?");
-                            System.out.println("S - Sim\nX - Não");
-                            String finalizar = sc.nextLine().trim();
-                            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")){
-                                cadAcesso = false;
-                            }
-                        }break;
                     default:
                         break;
                 }
@@ -549,12 +507,11 @@ public class Testera {
                         2 - Consultar Integrante\s
                         3 - Criar Aulas\s
                         4 - Consultar Aula\s
-                        5 - Cadastrar Treino\s
-                        6 - Consultar treino\s
-                        7 - Cancelar Aula\s
-                        8 - Cancelar Treino\s
-                        9 - Inativar Integrante\s
-                        10 - Cadastrar Acesso\s
+                        5 - Consultar Treino\s
+                        6 - Cancelar Aula\s
+                        7 - Cancelar Treino\s
+                        8 - Inativar Integrante\s
+                        9 - Cadastrar Acesso\s
                         >|< Para maior lucidez, não seja um usuário de atacadão >|<\s
                         Pressione 'x' para sair.""");
                 String input = sc.nextLine().trim();
@@ -645,24 +602,6 @@ public class Testera {
                         break;
 
                     case 5:
-                        //Cadastrar treinos
-                        cadTreino = true;
-                        while (cadTreino) {
-                            try {
-                                exercicioService.cadastrarTreino();
-                            } catch (ExercicioException e) {
-                                System.out.println("Não foi ponsível continuar com essa ação.");
-                                continue;
-                            }
-                            System.out.println("Deseja cadastrar outro treino?");
-                            System.out.println("S - Sim\nX - Não");
-                            String finalizar = sc.nextLine().trim();
-                            if (finalizar.equalsIgnoreCase("X") || finalizar.equalsIgnoreCase("Não")) {
-                                cadTreino = false;
-                            }
-                        }
-                        break;
-                    case 6:
                         //Consultar treinos
                         verTreino = true;
                         while (verTreino){
@@ -682,7 +621,7 @@ public class Testera {
                             }
                         }
                         break;
-                    case 7:
+                    case 6:
                         //Cancelar aula
                         delAula = true;
                         while (delAula) {
@@ -703,7 +642,7 @@ public class Testera {
                         }
                         break;
 
-                    case 8:
+                    case 7:
                         //Cancelar treino
                         delTreino = true;
                         while (delTreino) {
@@ -724,7 +663,7 @@ public class Testera {
                         }
                         break;
 
-                    case 9:
+                    case 8:
                         //Inativar integrante
                         delPessoa = true;
                         while (delPessoa) {
@@ -745,7 +684,7 @@ public class Testera {
                         }
                         break;
 
-                    case 10:
+                    case 9:
                         //Cadastrar acesso
                         cadAcesso = true;
                         while (cadAcesso) {
