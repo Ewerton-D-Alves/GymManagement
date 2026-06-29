@@ -19,6 +19,10 @@ public class Aluno extends Pessoa {
 
 
 
+ @OneToOne
+ @JoinColumn(name = "pessoa_id", nullable = false)
+ private Pessoa pessoa;
+
  public Aluno (String primeiroNome, String sobrenome, String cpf, String telefone, LocalDate dataNascimento,
          String nomeEmerg, String telefoneEmerg, String matricula) {
   super(primeiroNome,sobrenome, cpf, telefone, dataNascimento, nomeEmerg, telefoneEmerg);

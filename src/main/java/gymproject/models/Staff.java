@@ -21,6 +21,11 @@ public abstract class Staff extends Pessoa {
     @Column(name = "senha", nullable = true,length = 255)
     private String senhaAcesso;
 
+    @OneToOne
+    @JoinColumn(name = "pessoa_id", nullable = false)
+    private Pessoa pessoa;
+
+
     public Staff(String primeiroNome, String sobrenome,
                  String cpf, String telefone, LocalDate dataNascimento,
                  String telefoneEmerg, String nomeEmerg,
